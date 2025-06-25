@@ -1,8 +1,10 @@
 import {
     BoltIcon,
-    BookOpenIcon,
+    BookOpen,
     ChevronDownIcon,
+    Home,
     Layers2Icon,
+    LayoutDashboard,
     LogOutIcon,
     PinIcon,
     UserPenIcon,
@@ -23,15 +25,41 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import Link from "next/link"
+import { authClient } from "@/lib/auth-client"
+import { toast } from "sonner"
+import { useRouter } from "next/navigation"
 
-export function UserDropdown() {
+interface IAppProps {
+    name: string;
+    email: string;
+    image: string;
+}
+
+export function UserDropdown({ name, email, image }: IAppProps) {
+    const router = useRouter();
+
+    async function signOut() {
+        await authClient.signOut({
+            fetchOptions: {
+                onSuccess: () => {
+                    router.push("/");
+                    toast.success("Sign out successful");
+                },
+                onError: (err) => {
+                    toast.error(`Sign out failed: ${err.error.message}`);
+                }
+            }
+        })
+    }
+
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="h-auto p-0 hover:bg-transparent">
                     <Avatar>
-                        <AvatarImage src="./avatar.jpg" alt="Profile image" />
-                        <AvatarFallback>KK</AvatarFallback>
+                        <AvatarImage src={email} alt="Profile image" />
+                        <AvatarFallback>{name[0].toUpperCase()}</AvatarFallback>
                     </Avatar>
                     <ChevronDownIcon
                         size={16}
@@ -43,40 +71,35 @@ export function UserDropdown() {
             <DropdownMenuContent align="end" className="max-w-64">
                 <DropdownMenuLabel className="flex min-w-0 flex-col">
                     <span className="text-foreground truncate text-sm font-medium">
-                        Keith Kennedy
+                        {name}
                     </span>
                     <span className="text-muted-foreground truncate text-xs font-normal">
-                        k.kennedy@originui.com
+                        {email}
                     </span>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
-                    <DropdownMenuItem>
-                        <BoltIcon size={16} className="opacity-60" aria-hidden="true" />
-                        <span>Option 1</span>
+                    <DropdownMenuItem asChild>
+                        <Link href="/">
+                            <Home size={16} className="opacity-60" aria-hidden="true" />
+                            <span>Home</span>
+                        </Link>
                     </DropdownMenuItem>
-                    <DropdownMenuItem>
-                        <Layers2Icon size={16} className="opacity-60" aria-hidden="true" />
-                        <span>Option 2</span>
+                    <DropdownMenuItem asChild>
+                        <Link href="/course">
+                            <BookOpen size={16} className="opacity-60" aria-hidden="true" />
+                            <span>Courses</span>
+                        </Link>
                     </DropdownMenuItem>
-                    <DropdownMenuItem>
-                        <BookOpenIcon size={16} className="opacity-60" aria-hidden="true" />
-                        <span>Option 3</span>
-                    </DropdownMenuItem>
-                </DropdownMenuGroup>
-                <DropdownMenuSeparator />
-                <DropdownMenuGroup>
-                    <DropdownMenuItem>
-                        <PinIcon size={16} className="opacity-60" aria-hidden="true" />
-                        <span>Option 4</span>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                        <UserPenIcon size={16} className="opacity-60" aria-hidden="true" />
-                        <span>Option 5</span>
+                    <DropdownMenuItem asChild>
+                        <Link href="/dashboard">
+                            <LayoutDashboard size={16} className="opacity-60" aria-hidden="true" />
+                            <span>Dashboard</span>
+                        </Link>
                     </DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
+                <DropdownMenuItem onClick={signOut}>
                     <LogOutIcon size={16} className="opacity-60" aria-hidden="true" />
                     <span>Logout</span>
                 </DropdownMenuItem>
