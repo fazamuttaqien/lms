@@ -1,8 +1,8 @@
 "use client";
 
 import { Button, buttonVariants } from "@/components/ui/button";
-import { courseCategories, courseLevels, courseSchema, CourseSchemaType } from "@/lib/zodSchemas";
-import { ArrowLeft, SparkleIcon } from "lucide-react";
+import { courseCategories, courseLevels, courseSchema, CourseSchemaType, courseStatus } from "@/lib/zodSchemas";
+import { ArrowLeft, PlusIcon, SparkleIcon } from "lucide-react";
 import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -12,6 +12,7 @@ import { useForm } from "react-hook-form";
 import slugify from "slugify";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { RichTextEditor } from "@/components/rich-text-editor/Editor";
 
 export default function CourseCreatePage() {
     const form = useForm<CourseSchemaType>({
@@ -122,9 +123,7 @@ export default function CourseCreatePage() {
                                     <FormItem className="w-full">
                                         <FormLabel>Description</FormLabel>
                                         <FormControl>
-                                            <Textarea
-                                                className="min-h-[120px]"
-                                                {...field} />
+                                            <RichTextEditor field={field} />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -138,7 +137,7 @@ export default function CourseCreatePage() {
                                         <FormLabel>Thumbnail Image</FormLabel>
                                         <FormControl>
                                             <Input
-                                                placeholder="Thumbnail Url"
+                                                placeholder="Thumbnail URL"
                                                 {...field} />
                                         </FormControl>
                                         <FormMessage />
@@ -202,7 +201,69 @@ export default function CourseCreatePage() {
                                         </FormItem>
                                     )}
                                 />
+
+                                <FormField
+                                    control={form.control}
+                                    name="duration"
+                                    render={({ field }) => (
+                                        <FormItem className="w-full">
+                                            <FormLabel>Duration (hours)</FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    placeholder="Duration"
+                                                    type="number"
+                                                    {...field} />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name="price"
+                                    render={({ field }) => (
+                                        <FormItem className="w-full">
+                                            <FormLabel>Price ($)</FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    placeholder="Price"
+                                                    type="number"
+                                                    {...field} />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
                             </div>
+                            <FormField
+                                control={form.control}
+                                name="status"
+                                render={({ field }) => (
+                                    <FormItem className="w-full">
+                                        <FormLabel>Status</FormLabel>
+                                        <Select
+                                            onValueChange={field.onChange}
+                                            defaultValue={field.value}
+                                        >
+                                            <FormControl>
+                                                <SelectTrigger className="w-full">
+                                                    <SelectValue placeholder="Select Status" />
+                                                </SelectTrigger>
+                                            </FormControl>
+                                            <SelectContent>
+                                                {courseStatus.map((status) => (
+                                                    <SelectItem key={status} value={status}>
+                                                        {status}
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+
+                            <Button>Create Course <PlusIcon className="ml-1" size={16} /></Button>
                         </form>
                     </Form>
                 </CardContent>
