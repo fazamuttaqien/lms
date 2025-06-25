@@ -1,7 +1,7 @@
 "use client";
 
 import { Button, buttonVariants } from "@/components/ui/button";
-import { courseCategories, courseLevels, courseSchema, CourseSchemaType, courseStatus } from "@/lib/zodSchemas";
+import { courseCategories, courseLevels, courseSchema, CourseSchemaType, courseStatus } from "@/lib/zod-schemas";
 import { ArrowLeft, PlusIcon, SparkleIcon } from "lucide-react";
 import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
