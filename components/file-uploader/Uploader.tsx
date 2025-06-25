@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import { FileRejection, useDropzone } from 'react-dropzone'
 import { Card, CardContent } from '../ui/card';
 import { cn } from '@/lib/utils';
-import { RenderEmptyState, RenderErrorState } from './RenderState';
+import { RenderEmptyState, RenderErrorState, RenderUploadedState } from './RenderState';
 import { toast } from 'sonner';
 import { v4 as uuidv4 } from "uuid";
 
@@ -150,7 +150,9 @@ export function Uploader() {
             return <RenderErrorState />
         }
         if (fileState.objectUrl) {
-            return <h1>Uploaded file</h1>
+            return (
+                <RenderUploadedState previewUrl={fileState.objectUrl} />
+            )
         }
 
         return <RenderEmptyState isDragActive={isDragActive} />
