@@ -17,6 +17,7 @@ export {
     slidingWindow,
 }
 
+// The arcjet instance is created outside of the handler
 export default arcjet({
     key: env.ARCJET_KEY,
     characteristics: ["fingerprint"],
