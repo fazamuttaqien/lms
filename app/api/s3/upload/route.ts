@@ -8,6 +8,7 @@ import { S3 } from '@/lib/s3-client';
 import arcjet, { detectBot, fixedWindow } from '@/lib/arcjet';
 import { auth } from '@/lib/auth';
 import { headers } from 'next/headers';
+import { requiredAdmin } from '@/app/data/admin/require-admin';
 
 export const fileUploadSchema = z.object({
   fileName: z.string().min(1, { message: 'Filename is required' }),
@@ -26,9 +27,7 @@ const aj = arcjet
   .withRule(fixedWindow({ mode: 'LIVE', window: '1m', max: 5 }));
 
 export async function POST(request: Request) {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
+  const session = await requiredAdmin();
 
   try {
     const decision = await aj.protect(request, {
