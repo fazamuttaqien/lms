@@ -80,7 +80,7 @@ model Course {
 
   category         String
   smallDescription String
-  sloug            String @unique
+  slug            String @unique
 
   status CourseStatus @default(Draft)
 
