@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'LMS Next App',
+  title: 'LMS',
 };
 
 export default function RootLayout({
