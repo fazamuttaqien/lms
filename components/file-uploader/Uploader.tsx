@@ -1,3 +1,5 @@
+'use client';
+
 import { useCallback, useEffect, useState } from 'react';
 import { FileRejection, useDropzone } from 'react-dropzone';
 import { Card, CardContent } from '../ui/card';
@@ -51,7 +53,6 @@ export function Uploader({ onChange, value }: IAppProps) {
     }));
 
     try {
-      // 1. Get presigned URL
       const presignedResponse = await fetch('/api/s3/upload', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -62,6 +63,7 @@ export function Uploader({ onChange, value }: IAppProps) {
           isImage: true,
         }),
       });
+
       if (!presignedResponse.ok) {
         toast.error('Failed to get presigned URL');
         setFileState((prev) => ({
@@ -106,9 +108,11 @@ export function Uploader({ onChange, value }: IAppProps) {
             reject(new Error('Upload failed...'));
           }
         };
+
         xhr.onerror = () => {
           reject(new Error('Upload failed'));
         };
+
         xhr.open('PUT', presignedUrl);
         xhr.setRequestHeader('Content-Type', file.type);
         xhr.send(file);
@@ -253,9 +257,11 @@ export function Uploader({ onChange, value }: IAppProps) {
   }
 
   useEffect(() => {
-    if (fileState.objectUrl && !fileState.objectUrl.startsWith('http')) {
-      URL.revokeObjectURL(fileState.objectUrl);
-    }
+    return () => {
+      if (fileState.objectUrl && !fileState.objectUrl.startsWith('http')) {
+        URL.revokeObjectURL(fileState.objectUrl);
+      }
+    };
   }, [fileState.objectUrl]);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -267,6 +273,7 @@ export function Uploader({ onChange, value }: IAppProps) {
     onDropRejected: rejectedFiles,
     disabled: fileState.uploading || !!fileState.objectUrl,
   });
+
   return (
     <Card
       {...getRootProps()}

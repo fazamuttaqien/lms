@@ -26,8 +26,8 @@ export default function AuthLayout({
           href="/"
           className="flex items-center gap-2 self-center font-medium"
         >
-          <Image src={Logo} alt="Log" width={32} height={32} />
-          LMS
+          {/* <Image src={Logo} alt="Log" width={32} height={32} /> */}
+          Acme Inc.
         </Link>
         {children}
         <div className="text-balance text-sm text-center text-muted-foreground">
