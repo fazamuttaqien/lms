@@ -44,10 +44,12 @@ import { tryCatch } from '@/lib/try-catch';
 import { CreateCourse } from './actions';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
+import { useConfetti } from '@/hooks/use-confetti';
 
 export default function CourseCreatePage() {
   const [pending, startTransition] = useTransition();
   const router = useRouter();
+  const { triggerConfetti } = useConfetti();
 
   // 1. Define form
   const form = useForm<CourseSchemaType>({
@@ -78,6 +80,7 @@ export default function CourseCreatePage() {
         toast.success(result.message);
         form.reset();
         router.push('/admin/courses');
+        triggerConfetti();
       } else if (result.status === 'error') {
         toast.error(result.message);
       }
