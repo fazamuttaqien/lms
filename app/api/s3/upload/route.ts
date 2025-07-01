@@ -6,7 +6,6 @@ import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { env } from "@/lib/env";
 import { S3 } from "@/lib/s3-client";
 import arcjet, {
-  detectBot,
   fixedWindow,
 } from "@/lib/arcjet";
 import { requiredAdmin } from "@/app/data/admin/require-admin";
@@ -23,12 +22,6 @@ export const fileUploadSchema = z.object({
 });
 
 const aj = arcjet
-  .withRule(
-    detectBot({
-      mode: "LIVE",
-      allow: [],
-    })
-  )
   .withRule(
     fixedWindow({ mode: "LIVE", window: "1m", max: 5 })
   );
