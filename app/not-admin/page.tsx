@@ -1,13 +1,13 @@
-import { buttonVariants } from '@/components/ui/button';
+import { buttonVariants } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
-import { ArrowLeft, ShieldX } from 'lucide-react';
-import Link from 'next/link';
+} from "@/components/ui/card";
+import { ArrowLeft, ShieldX } from "lucide-react";
+import Link from "next/link";
 
 export default function NotAdminRoute() {
   return (
@@ -19,15 +19,16 @@ export default function NotAdminRoute() {
           </div>
           <CardTitle>Access Restricted</CardTitle>
           <CardDescription className="max-w-xs mx-auto">
-            Hey! You are not an admin, which means you can&apos;t create any
-            courses of stuff like that...
+            Hey! You are not an admin, which means you
+            can&apos;t create any courses of stuff like
+            that...
           </CardDescription>
         </CardHeader>
         <CardContent>
           <Link
             href="/"
             className={buttonVariants({
-              className: 'w-full',
+              className: "w-full",
             })}
           >
             <ArrowLeft className="mr-1 size-4" />

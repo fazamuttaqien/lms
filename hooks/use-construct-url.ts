@@ -1,6 +1,6 @@
-import { env } from '@/lib/env';
+import { env } from "@/lib/env";
 
 export function useConstructUrl(key: string): string {
-  if (!key) return '';
+  if (!key) return "";
   return `https://fm-lms.fly.storage.tigris.dev/${key}`;
 }

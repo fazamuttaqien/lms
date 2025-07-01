@@ -1,8 +1,8 @@
-import { buttonVariants } from '@/components/ui/button';
-import { ArrowLeft } from 'lucide-react';
-import Link from 'next/link';
-import Image from 'next/image';
-import Logo from '@/public/logo.png';
+import { buttonVariants } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
+import Link from "next/link";
+import Image from "next/image";
+import Logo from "@/public/logo.png";
 
 export default function AuthLayout({
   children,
@@ -14,8 +14,8 @@ export default function AuthLayout({
       <Link
         href="/"
         className={buttonVariants({
-          variant: 'outline',
-          className: 'absolute top-4 left-4',
+          variant: "outline",
+          className: "absolute top-4 left-4",
         })}
       >
         <ArrowLeft className="size-4" />
@@ -31,12 +31,18 @@ export default function AuthLayout({
         </Link>
         {children}
         <div className="text-balance text-sm text-center text-muted-foreground">
-          By continuing, you agree to our{' '}
-          <Link href="/terms" className="underline underline-offset-4">
+          By continuing, you agree to our{" "}
+          <Link
+            href="/terms"
+            className="underline underline-offset-4"
+          >
             Terms of Service
-          </Link>{' '}
-          and{' '}
-          <Link href="/privacy" className="underline underline-offset-4">
+          </Link>{" "}
+          and{" "}
+          <Link
+            href="/privacy"
+            className="underline underline-offset-4"
+          >
             Privacy Policy
           </Link>
           .

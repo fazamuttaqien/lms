@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -7,12 +7,15 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog';
-import { lessonSchema, LessonSchemaType } from '@/lib/zod-schemas';
-import { Plus } from 'lucide-react';
-import { useState, useTransition } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
+} from "@/components/ui/dialog";
+import {
+  lessonSchema,
+  LessonSchemaType,
+} from "@/lib/zod-schemas";
+import { Plus } from "lucide-react";
+import { useState, useTransition } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
   FormControl,
@@ -20,11 +23,11 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { createChapter, createLesson } from '../action';
-import { toast } from 'sonner';
-import { tryCatch } from '@/lib/try-catch';
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { createChapter, createLesson } from "../action";
+import { toast } from "sonner";
+import { tryCatch } from "@/lib/try-catch";
 
 export function NewLessonModal({
   courseId,
@@ -39,7 +42,7 @@ export function NewLessonModal({
   const form = useForm<LessonSchemaType>({
     resolver: zodResolver(lessonSchema),
     defaultValues: {
-      name: '',
+      name: "",
       courseId: courseId,
       chapterId: chapterId,
     },
@@ -47,17 +50,21 @@ export function NewLessonModal({
 
   async function onSubmit(values: LessonSchemaType) {
     startTransition(async () => {
-      const { data: result, error } = await tryCatch(createLesson(values));
+      const { data: result, error } = await tryCatch(
+        createLesson(values)
+      );
       if (error) {
-        toast.error('An unexpected error occured. Please try again');
+        toast.error(
+          "An unexpected error occured. Please try again"
+        );
         return;
       }
 
-      if (result.status === 'success') {
+      if (result.status === "success") {
         toast.success(result.message);
         form.reset();
         setIsOpen(false);
-      } else if (result.status === 'error') {
+      } else if (result.status === "error") {
         toast.error(result.message);
       }
     });
@@ -74,7 +81,10 @@ export function NewLessonModal({
   return (
     <Dialog open={isOpen} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
-        <Button variant="outline" className="w-full justify-center gap-1">
+        <Button
+          variant="outline"
+          className="w-full justify-center gap-1"
+        >
           <Plus className="size=4" /> New Lesson
         </Button>
       </DialogTrigger>
@@ -86,7 +96,10 @@ export function NewLessonModal({
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form className="space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
+          <form
+            className="space-y-8"
+            onSubmit={form.handleSubmit(onSubmit)}
+          >
             <FormField
               control={form.control}
               name="name"
@@ -94,7 +107,10 @@ export function NewLessonModal({
                 <FormItem>
                   <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Lesson name" {...field} />
+                    <Input
+                      placeholder="Lesson name"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -103,7 +119,7 @@ export function NewLessonModal({
 
             <DialogFooter>
               <Button disabled={pending} type="submit">
-                {pending ? 'Saving...' : 'Save Change'}
+                {pending ? "Saving..." : "Save Change"}
               </Button>
             </DialogFooter>
           </form>

@@ -1,40 +1,51 @@
-'use client';
+"use client";
 
-import { authClient } from '@/lib/auth-client';
-import { Button } from '@/components/ui/button';
+import { authClient } from "@/lib/auth-client";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { GithubIcon, Loader, Loader2, Send } from 'lucide-react';
-import { useState, useTransition } from 'react';
-import { toast } from 'sonner';
-import { useRouter } from 'next/navigation';
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  GithubIcon,
+  Loader,
+  Loader2,
+  Send,
+} from "lucide-react";
+import { useState, useTransition } from "react";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export default function LoginForm() {
   const router = useRouter();
 
-  const [githubLoading, startGithubTransition] = useTransition();
-  const [emailLoading, startEmailTransition] = useTransition();
+  const [githubLoading, startGithubTransition] =
+    useTransition();
+  const [emailLoading, startEmailTransition] =
+    useTransition();
 
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
 
   async function signInWithGithub() {
     startGithubTransition(async () => {
       await authClient.signIn.social({
-        provider: 'github',
-        callbackURL: '/',
+        provider: "github",
+        callbackURL: "/",
         fetchOptions: {
           onSuccess: () => {
-            toast.success('Successfully signed in with Github!');
+            toast.success(
+              "Successfully signed in with Github!"
+            );
           },
           onError: (err) => {
-            toast.error(`Failed to sign in with Github: ${err.error.message}`);
+            toast.error(
+              `Failed to sign in with Github: ${err.error.message}`
+            );
           },
         },
       });
@@ -45,11 +56,13 @@ export default function LoginForm() {
     startEmailTransition(async () => {
       await authClient.emailOtp.sendVerificationOtp({
         email: email,
-        type: 'sign-in',
+        type: "sign-in",
         fetchOptions: {
           onSuccess: () => {
-            toast.success('Verification email sent! Please check your inbox.');
-            router.push('/verify-email?email=${email}');
+            toast.success(
+              "Verification email sent! Please check your inbox."
+            );
+            router.push("/verify-email?email=${email}");
           },
           onError: (err) => {
             toast.error(
@@ -64,7 +77,9 @@ export default function LoginForm() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-xl">Welcome Back!</CardTitle>
+        <CardTitle className="text-xl">
+          Welcome Back!
+        </CardTitle>
         <CardDescription>
           Login with your Github or Email Account
         </CardDescription>
@@ -107,7 +122,10 @@ export default function LoginForm() {
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
-          <Button disabled={emailLoading} onClick={signInWithEmail}>
+          <Button
+            disabled={emailLoading}
+            onClick={signInWithEmail}
+          >
             {emailLoading ? (
               <>
                 <Loader2 className="size-4 animate-spin" />

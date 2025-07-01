@@ -1,23 +1,31 @@
-'use client';
+"use client";
 
-import { Button, buttonVariants } from '@/components/ui/button';
+import {
+  Button,
+  buttonVariants,
+} from "@/components/ui/button";
 import {
   courseCategories,
   courseLevels,
   courseSchema,
   CourseSchemaType,
   courseStatus,
-} from '@/lib/zod-schemas';
-import { ArrowLeft, Loader2, PlusIcon, SparkleIcon } from 'lucide-react';
-import Link from 'next/link';
-import { zodResolver } from '@hookform/resolvers/zod';
+} from "@/lib/zod-schemas";
+import {
+  ArrowLeft,
+  Loader2,
+  PlusIcon,
+  SparkleIcon,
+} from "lucide-react";
+import Link from "next/link";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
+} from "@/components/ui/card";
 import {
   Form,
   FormControl,
@@ -25,26 +33,26 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { useForm } from 'react-hook-form';
-import slugify from 'slugify';
-import { Textarea } from '@/components/ui/textarea';
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { useForm } from "react-hook-form";
+import slugify from "slugify";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { RichTextEditor } from '@/components/rich-text-editor/Editor';
-import { Uploader } from '@/components/file-uploader/Uploader';
-import { useTransition } from 'react';
-import { tryCatch } from '@/lib/try-catch';
-import { CreateCourse } from './actions';
-import { toast } from 'sonner';
-import { useRouter } from 'next/navigation';
-import { useConfetti } from '@/hooks/use-confetti';
+} from "@/components/ui/select";
+import { RichTextEditor } from "@/components/rich-text-editor/Editor";
+import { Uploader } from "@/components/file-uploader/Uploader";
+import { useTransition } from "react";
+import { tryCatch } from "@/lib/try-catch";
+import { CreateCourse } from "./actions";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import { useConfetti } from "@/hooks/use-confetti";
 
 export default function CourseCreatePage() {
   const [pending, startTransition] = useTransition();
@@ -55,33 +63,37 @@ export default function CourseCreatePage() {
   const form = useForm<CourseSchemaType>({
     resolver: zodResolver(courseSchema),
     defaultValues: {
-      title: '',
-      description: '',
-      fileKey: '',
+      title: "",
+      description: "",
+      fileKey: "",
       price: 0,
       duration: 0,
-      level: 'Beginner',
-      category: 'Personal Development',
-      smallDescription: '',
-      slug: '',
-      status: 'Draft',
+      level: "Beginner",
+      category: "Personal Development",
+      smallDescription: "",
+      slug: "",
+      status: "Draft",
     },
   });
 
   // 2. Define a submit handler
   const onSubmit = (data: CourseSchemaType) => {
     startTransition(async () => {
-      const { data: result, error } = await tryCatch(CreateCourse(data));
+      const { data: result, error } = await tryCatch(
+        CreateCourse(data)
+      );
       if (error) {
-        toast.error('An unexpected error occured. Please try again.');
+        toast.error(
+          "An unexpected error occured. Please try again."
+        );
         return;
       }
-      if (result.status === 'success') {
+      if (result.status === "success") {
         toast.success(result.message);
         form.reset();
-        router.push('/admin/courses');
+        router.push("/admin/courses");
         triggerConfetti();
-      } else if (result.status === 'error') {
+      } else if (result.status === "error") {
         toast.error(result.message);
       }
     });
@@ -93,13 +105,15 @@ export default function CourseCreatePage() {
         <Link
           href="/admin/courses"
           className={buttonVariants({
-            variant: 'outline',
-            size: 'icon',
+            variant: "outline",
+            size: "icon",
           })}
         >
           <ArrowLeft className="size-4" />
         </Link>
-        <h1 className="text-2xl font-bold">Create Courses</h1>
+        <h1 className="text-2xl font-bold">
+          Create Courses
+        </h1>
       </div>
       <Card>
         <CardHeader>
@@ -110,7 +124,10 @@ export default function CourseCreatePage() {
         </CardHeader>
         <CardContent>
           <Form {...form}>
-            <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
+            <form
+              className="space-y-6"
+              onSubmit={form.handleSubmit(onSubmit)}
+            >
               <FormField
                 control={form.control}
                 name="title"
@@ -118,7 +135,10 @@ export default function CourseCreatePage() {
                   <FormItem>
                     <FormLabel>Title</FormLabel>
                     <FormControl>
-                      <Input placeholder="Title" {...field} />
+                      <Input
+                        placeholder="Title"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -133,7 +153,10 @@ export default function CourseCreatePage() {
                     <FormItem className="w-full">
                       <FormLabel>Slug</FormLabel>
                       <FormControl>
-                        <Input placeholder="Slug" {...field} />
+                        <Input
+                          placeholder="Slug"
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -144,12 +167,16 @@ export default function CourseCreatePage() {
                   type="button"
                   className="w-fit"
                   onClick={() => {
-                    const titleValue = form.getValues('title');
+                    const titleValue =
+                      form.getValues("title");
                     const slug = slugify(titleValue);
-                    form.setValue('slug', slug, { shouldValidate: true });
+                    form.setValue("slug", slug, {
+                      shouldValidate: true,
+                    });
                   }}
                 >
-                  Generate Slug <SparkleIcon className="ml-1" size={16} />
+                  Generate Slug{" "}
+                  <SparkleIcon className="ml-1" size={16} />
                 </Button>
               </div>
               <FormField
@@ -159,7 +186,10 @@ export default function CourseCreatePage() {
                   <FormItem className="w-full">
                     <FormLabel>Small Description</FormLabel>
                     <FormControl>
-                      <Textarea className="min-h-[120px]" {...field} />
+                      <Textarea
+                        className="min-h-[120px]"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -213,11 +243,16 @@ export default function CourseCreatePage() {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          {courseCategories.map((category) => (
-                            <SelectItem key={category} value={category}>
-                              {category}
-                            </SelectItem>
-                          ))}
+                          {courseCategories.map(
+                            (category) => (
+                              <SelectItem
+                                key={category}
+                                value={category}
+                              >
+                                {category}
+                              </SelectItem>
+                            )
+                          )}
                         </SelectContent>
                       </Select>
                       <FormMessage />
@@ -242,7 +277,10 @@ export default function CourseCreatePage() {
                         </FormControl>
                         <SelectContent>
                           {courseLevels.map((level) => (
-                            <SelectItem key={level} value={level}>
+                            <SelectItem
+                              key={level}
+                              value={level}
+                            >
                               {level}
                             </SelectItem>
                           ))}
@@ -258,7 +296,9 @@ export default function CourseCreatePage() {
                   name="duration"
                   render={({ field }) => (
                     <FormItem className="w-full">
-                      <FormLabel>Duration (hours)</FormLabel>
+                      <FormLabel>
+                        Duration (hours)
+                      </FormLabel>
                       <FormControl>
                         <Input
                           placeholder="Duration"
@@ -277,7 +317,11 @@ export default function CourseCreatePage() {
                     <FormItem className="w-full">
                       <FormLabel>Price ($)</FormLabel>
                       <FormControl>
-                        <Input placeholder="Price" type="number" {...field} />
+                        <Input
+                          placeholder="Price"
+                          type="number"
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -301,7 +345,10 @@ export default function CourseCreatePage() {
                       </FormControl>
                       <SelectContent>
                         {courseStatus.map((status) => (
-                          <SelectItem key={status} value={status}>
+                          <SelectItem
+                            key={status}
+                            value={status}
+                          >
                             {status}
                           </SelectItem>
                         ))}
@@ -320,7 +367,8 @@ export default function CourseCreatePage() {
                   </>
                 ) : (
                   <>
-                    Create Course <PlusIcon className="ml-1" size={16} />
+                    Create Course{" "}
+                    <PlusIcon className="ml-1" size={16} />
                   </>
                 )}
               </Button>

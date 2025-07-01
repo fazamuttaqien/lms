@@ -1,20 +1,25 @@
-import { requiredAdmin } from '@/app/data/admin/require-admin';
-import arcjet, { detectBot, fixedWindow } from '@/lib/arcjet';
-import { auth } from '@/lib/auth';
-import { env } from '@/lib/env';
-import { S3 } from '@/lib/s3-client';
-import { DeleteObjectCommand } from '@aws-sdk/client-s3';
-import { headers } from 'next/headers';
-import { NextResponse } from 'next/server';
+import { requiredAdmin } from "@/app/data/admin/require-admin";
+import arcjet, {
+  detectBot,
+  fixedWindow,
+} from "@/lib/arcjet";
+import { auth } from "@/lib/auth";
+import { env } from "@/lib/env";
+import { S3 } from "@/lib/s3-client";
+import { DeleteObjectCommand } from "@aws-sdk/client-s3";
+import { headers } from "next/headers";
+import { NextResponse } from "next/server";
 
 const aj = arcjet
   .withRule(
     detectBot({
-      mode: 'LIVE',
+      mode: "LIVE",
       allow: [],
     })
   )
-  .withRule(fixedWindow({ mode: 'LIVE', window: '1m', max: 5 }));
+  .withRule(
+    fixedWindow({ mode: "LIVE", window: "1m", max: 5 })
+  );
 
 export async function DELETE(request: Request) {
   const session = await requiredAdmin();
@@ -25,7 +30,10 @@ export async function DELETE(request: Request) {
     });
 
     if (decision.isDenied()) {
-      return NextResponse.json({ error: 'Not good' }, { status: 429 });
+      return NextResponse.json(
+        { error: "Not good" },
+        { status: 429 }
+      );
     }
 
     const body = await request.json();
@@ -33,7 +41,7 @@ export async function DELETE(request: Request) {
     const key = body.key;
     if (!key) {
       return NextResponse.json(
-        { error: 'Missing or invalid object key' },
+        { error: "Missing or invalid object key" },
         { status: 400 }
       );
     }
@@ -46,12 +54,12 @@ export async function DELETE(request: Request) {
     await S3.send(command);
 
     return NextResponse.json(
-      { message: 'File deleted successfully' },
+      { message: "File deleted successfully" },
       { status: 200 }
     );
   } catch (error) {
     return NextResponse.json(
-      { error: 'Missing or invalid object key' },
+      { error: "Missing or invalid object key" },
       { status: 500 }
     );
   }

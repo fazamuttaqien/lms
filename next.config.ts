@@ -1,4 +1,4 @@
-import type { NextConfig } from 'next';
+import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
@@ -8,9 +8,9 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
-        hostname: 'fm-lms.fly.storage.tigris.dev',
-        port: '',
-        protocol: 'https',
+        hostname: "fm-lms.fly.storage.tigris.dev",
+        port: "",
+        protocol: "https",
       },
     ],
   },

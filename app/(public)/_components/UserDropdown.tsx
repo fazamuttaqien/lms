@@ -8,10 +8,14 @@ import {
   LogOutIcon,
   PinIcon,
   UserPenIcon,
-} from 'lucide-react';
+} from "lucide-react";
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,11 +24,11 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import Link from 'next/link';
-import { authClient } from '@/lib/auth-client';
-import { toast } from 'sonner';
-import { useRouter } from 'next/navigation';
+} from "@/components/ui/dropdown-menu";
+import Link from "next/link";
+import { authClient } from "@/lib/auth-client";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 interface IAppProps {
   name: string;
@@ -32,18 +36,24 @@ interface IAppProps {
   image: string;
 }
 
-export function UserDropdown({ name, email, image }: IAppProps) {
+export function UserDropdown({
+  name,
+  email,
+  image,
+}: IAppProps) {
   const router = useRouter();
 
   async function signOut() {
     await authClient.signOut({
       fetchOptions: {
         onSuccess: () => {
-          router.push('/');
-          toast.success('Sign out successful');
+          router.push("/");
+          toast.success("Sign out successful");
         },
         onError: (err) => {
-          toast.error(`Sign out failed: ${err.error.message}`);
+          toast.error(
+            `Sign out failed: ${err.error.message}`
+          );
         },
       },
     });
@@ -52,10 +62,15 @@ export function UserDropdown({ name, email, image }: IAppProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="h-auto p-0 hover:bg-transparent">
+        <Button
+          variant="ghost"
+          className="h-auto p-0 hover:bg-transparent"
+        >
           <Avatar>
             <AvatarImage src={email} alt="Profile image" />
-            <AvatarFallback>{name[0].toUpperCase()}</AvatarFallback>
+            <AvatarFallback>
+              {name[0].toUpperCase()}
+            </AvatarFallback>
           </Avatar>
           <ChevronDownIcon
             size={16}
@@ -77,13 +92,21 @@ export function UserDropdown({ name, email, image }: IAppProps) {
         <DropdownMenuGroup>
           <DropdownMenuItem asChild>
             <Link href="/">
-              <Home size={16} className="opacity-60" aria-hidden="true" />
+              <Home
+                size={16}
+                className="opacity-60"
+                aria-hidden="true"
+              />
               <span>Home</span>
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
             <Link href="/course">
-              <BookOpen size={16} className="opacity-60" aria-hidden="true" />
+              <BookOpen
+                size={16}
+                className="opacity-60"
+                aria-hidden="true"
+              />
               <span>Courses</span>
             </Link>
           </DropdownMenuItem>
@@ -100,7 +123,11 @@ export function UserDropdown({ name, email, image }: IAppProps) {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={signOut}>
-          <LogOutIcon size={16} className="opacity-60" aria-hidden="true" />
+          <LogOutIcon
+            size={16}
+            className="opacity-60"
+            aria-hidden="true"
+          />
           <span>Logout</span>
         </DropdownMenuItem>
       </DropdownMenuContent>

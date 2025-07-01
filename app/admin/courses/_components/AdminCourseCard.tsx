@@ -1,15 +1,18 @@
-import { AdminCourseType } from '@/app/data/admin/admin-get-courses';
-import { Button, buttonVariants } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
+import { AdminCourseType } from "@/app/data/admin/admin-get-courses";
+import {
+  Button,
+  buttonVariants,
+} from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { Skeleton } from '@/components/ui/skeleton';
-import { useConstructUrl } from '@/hooks/use-construct-url';
+} from "@/components/ui/dropdown-menu";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useConstructUrl } from "@/hooks/use-construct-url";
 import {
   ArrowRight,
   Eye,
@@ -18,9 +21,9 @@ import {
   School,
   TimerIcon,
   Trash,
-} from 'lucide-react';
-import Image from 'next/image';
-import Link from 'next/link';
+} from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 
 interface IAppProps {
   data: AdminCourseType;
@@ -52,7 +55,9 @@ export function AdminCourseCard({ data }: IAppProps) {
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
-              <Link href={`/admin/courses/${data.id}/delete`}>
+              <Link
+                href={`/admin/courses/${data.id}/delete`}
+              >
                 <Trash className="size-4 mr-2 text-destructive" />
                 Delete Course
               </Link>
@@ -82,17 +87,21 @@ export function AdminCourseCard({ data }: IAppProps) {
         <div className="mt-4 flex items-center gap-x-5">
           <div className="flex items-center gap-x-2">
             <TimerIcon className="size-6 p-1 rounded-md text-primary bg-primary/10" />
-            <p className="text-sm text-muted-foreground">{data.duration}</p>
+            <p className="text-sm text-muted-foreground">
+              {data.duration}
+            </p>
           </div>
           <div className="flex items-center gap-x-2">
             <School className="size-6 p-1 rounded-md text-primary bg-primary/10" />
-            <p className="text-sm text-muted-foreground">{data.level}</p>
+            <p className="text-sm text-muted-foreground">
+              {data.level}
+            </p>
           </div>
         </div>
 
         <Link
           className={buttonVariants({
-            className: 'w-full mt-4',
+            className: "w-full mt-4",
           })}
           href={`/admin/course/${data.id}/edit`}
         >

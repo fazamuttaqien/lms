@@ -1,12 +1,11 @@
 import { prisma } from "@/lib/db";
-import { requiredAdmin } from "./require-admin";
+import { tree } from "next/dist/build/templates/app-page";
 import { notFound } from "next/navigation";
 
-export async function adminGetCourse(id: string) {
-  await requiredAdmin();
-  const data = await prisma.course.findUnique({
+export async function getIndividualCourse(slug: string) {
+  const course = await prisma.course.findUnique({
     where: {
-      id: id,
+      slug: slug,
     },
     select: {
       id: true,
@@ -16,37 +15,32 @@ export async function adminGetCourse(id: string) {
       price: true,
       duration: true,
       level: true,
-      status: true,
-      smallDescription: true,
       category: true,
-      slug: true,
+      smallDescription: true,
       chapter: {
         select: {
           id: true,
           title: true,
-          position: true,
           lessons: {
             select: {
               id: true,
               title: true,
-              description: true,
-              thumbnailKey: true,
-              position: true,
-              videoKey: true,
+            },
+            orderBy: {
+              position: "asc",
             },
           },
+        },
+        orderBy: {
+          position: "asc",
         },
       },
     },
   });
 
-  if (!data) {
+  if (!course) {
     return notFound();
   }
 
-  return data;
+  return course;
 }
-
-export type AdminCourseSingularType = Awaited<
-  ReturnType<typeof adminGetCourse>
->;

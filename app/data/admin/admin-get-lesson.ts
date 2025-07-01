@@ -1,6 +1,6 @@
-import { prisma } from '@/lib/db';
-import { requiredAdmin } from './require-admin';
-import { notFound } from 'next/navigation';
+import { prisma } from "@/lib/db";
+import { requiredAdmin } from "./require-admin";
+import { notFound } from "next/navigation";
 
 export async function adminGetLesson(id: string) {
   await requiredAdmin();
@@ -26,4 +26,6 @@ export async function adminGetLesson(id: string) {
   return data;
 }
 
-export type AdminLessonType = Awaited<ReturnType<typeof adminGetLesson>>;
+export type AdminLessonType = Awaited<
+  ReturnType<typeof adminGetLesson>
+>;

@@ -1,16 +1,19 @@
-'use client';
+"use client";
 
-import { AdminLessonType } from '@/app/data/admin/admin-get-lesson';
-import { Uploader } from '@/components/file-uploader/Uploader';
-import { RichTextEditor } from '@/components/rich-text-editor/Editor';
-import { Button, buttonVariants } from '@/components/ui/button';
+import { AdminLessonType } from "@/app/data/admin/admin-get-lesson";
+import { Uploader } from "@/components/file-uploader/Uploader";
+import { RichTextEditor } from "@/components/rich-text-editor/Editor";
+import {
+  Button,
+  buttonVariants,
+} from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
+} from "@/components/ui/card";
 import {
   Form,
   FormControl,
@@ -18,17 +21,20 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { tryCatch } from '@/lib/try-catch';
-import { lessonSchema, LessonSchemaType } from '@/lib/zod-schemas';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { ArrowLeft } from 'lucide-react';
-import Link from 'next/link';
-import { useTransition } from 'react';
-import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
-import { updateLesson } from '../actions';
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { tryCatch } from "@/lib/try-catch";
+import {
+  lessonSchema,
+  LessonSchemaType,
+} from "@/lib/zod-schemas";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ArrowLeft } from "lucide-react";
+import Link from "next/link";
+import { useTransition } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { updateLesson } from "../actions";
 
 interface IAppProps {
   data: AdminLessonType;
@@ -36,7 +42,11 @@ interface IAppProps {
   courseId: string;
 }
 
-export function LessonForm({ chapterId, courseId, data }: IAppProps) {
+export function LessonForm({
+  chapterId,
+  courseId,
+  data,
+}: IAppProps) {
   const [pending, startTransition] = useTransition();
 
   const form = useForm<LessonSchemaType>({
@@ -57,12 +67,14 @@ export function LessonForm({ chapterId, courseId, data }: IAppProps) {
         updateLesson(values, data.id)
       );
       if (error) {
-        toast.error('An unexpected error occured. Please try again.');
+        toast.error(
+          "An unexpected error occured. Please try again."
+        );
         return;
       }
-      if (result.status === 'success') {
+      if (result.status === "success") {
         toast.success(result.message);
-      } else if (result.status === 'error') {
+      } else if (result.status === "error") {
         toast.error(result.message);
       }
     });
@@ -71,7 +83,10 @@ export function LessonForm({ chapterId, courseId, data }: IAppProps) {
   return (
     <div>
       <Link
-        className={buttonVariants({ variant: 'outline', className: 'mb-6' })}
+        className={buttonVariants({
+          variant: "outline",
+          className: "mb-6",
+        })}
         href={`/admin/courses/${courseId}/edit`}
       >
         <ArrowLeft className="size-4" />
@@ -83,12 +98,16 @@ export function LessonForm({ chapterId, courseId, data }: IAppProps) {
         <CardHeader>
           <CardTitle>Lesson Configuration</CardTitle>
           <CardDescription>
-            Configure the video and description for this lesson.
+            Configure the video and description for this
+            lesson.
           </CardDescription>
         </CardHeader>
         <CardContent>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="space-y-6"
+            >
               <FormField
                 control={form.control}
                 name="name"
@@ -96,7 +115,10 @@ export function LessonForm({ chapterId, courseId, data }: IAppProps) {
                   <FormItem>
                     <FormLabel>Lesson name</FormLabel>
                     <FormControl>
-                      <Input placeholder="Chapter..." {...field} />
+                      <Input
+                        placeholder="Chapter..."
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -151,7 +173,7 @@ export function LessonForm({ chapterId, courseId, data }: IAppProps) {
               />
 
               <Button type="submit" disabled={pending}>
-                {pending ? 'Saving...' : 'Save Lesson'}
+                {pending ? "Saving..." : "Save Lesson"}
               </Button>
             </form>
           </Form>

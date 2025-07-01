@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -7,12 +7,15 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog';
-import { chapterSchema, ChapterSchemaType } from '@/lib/zod-schemas';
-import { Plus } from 'lucide-react';
-import { useState, useTransition } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
+} from "@/components/ui/dialog";
+import {
+  chapterSchema,
+  ChapterSchemaType,
+} from "@/lib/zod-schemas";
+import { Plus } from "lucide-react";
+import { useState, useTransition } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
   FormControl,
@@ -20,37 +23,45 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { createChapter } from '../action';
-import { toast } from 'sonner';
-import { tryCatch } from '@/lib/try-catch';
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { createChapter } from "../action";
+import { toast } from "sonner";
+import { tryCatch } from "@/lib/try-catch";
 
-export function NewChapterModal({ courseId }: { courseId: string }) {
+export function NewChapterModal({
+  courseId,
+}: {
+  courseId: string;
+}) {
   const [isOpen, setIsOpen] = useState(false);
   const [pending, startTransition] = useTransition();
 
   const form = useForm<ChapterSchemaType>({
     resolver: zodResolver(chapterSchema),
     defaultValues: {
-      name: '',
+      name: "",
       courseId: courseId,
     },
   });
 
   async function onSubmit(values: ChapterSchemaType) {
     startTransition(async () => {
-      const { data: result, error } = await tryCatch(createChapter(values));
+      const { data: result, error } = await tryCatch(
+        createChapter(values)
+      );
       if (error) {
-        toast.error('An unexpected error occured. Please try again');
+        toast.error(
+          "An unexpected error occured. Please try again"
+        );
         return;
       }
 
-      if (result.status === 'success') {
+      if (result.status === "success") {
         toast.success(result.message);
         form.reset();
         setIsOpen(false);
-      } else if (result.status === 'error') {
+      } else if (result.status === "error") {
         toast.error(result.message);
       }
     });
@@ -63,7 +74,11 @@ export function NewChapterModal({ courseId }: { courseId: string }) {
   return (
     <Dialog open={isOpen} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
-        <Button variant="outline" size="sm" className="gap-2">
+        <Button
+          variant="outline"
+          size="sm"
+          className="gap-2"
+        >
           <Plus className="size=4" /> New Chapter
         </Button>
       </DialogTrigger>
@@ -75,7 +90,10 @@ export function NewChapterModal({ courseId }: { courseId: string }) {
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form className="space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
+          <form
+            className="space-y-8"
+            onSubmit={form.handleSubmit(onSubmit)}
+          >
             <FormField
               control={form.control}
               name="name"
@@ -83,7 +101,10 @@ export function NewChapterModal({ courseId }: { courseId: string }) {
                 <FormItem>
                   <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Chapter name" {...field} />
+                    <Input
+                      placeholder="Chapter name"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -92,7 +113,7 @@ export function NewChapterModal({ courseId }: { courseId: string }) {
 
             <DialogFooter>
               <Button disabled={pending} type="submit">
-                {pending ? 'Saving...' : 'Save Change'}
+                {pending ? "Saving..." : "Save Change"}
               </Button>
             </DialogFooter>
           </form>

@@ -1,28 +1,37 @@
-import { NextResponse } from 'next/server';
-import { z } from 'zod';
-import { v4 as uuidv4 } from 'uuid';
-import { PutObjectCommand } from '@aws-sdk/client-s3';
-import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
-import { env } from '@/lib/env';
-import { S3 } from '@/lib/s3-client';
-import arcjet, { detectBot, fixedWindow } from '@/lib/arcjet';
-import { requiredAdmin } from '@/app/data/admin/require-admin';
+import { NextResponse } from "next/server";
+import { z } from "zod";
+import { v4 as uuidv4 } from "uuid";
+import { PutObjectCommand } from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import { env } from "@/lib/env";
+import { S3 } from "@/lib/s3-client";
+import arcjet, {
+  detectBot,
+  fixedWindow,
+} from "@/lib/arcjet";
+import { requiredAdmin } from "@/app/data/admin/require-admin";
 
 export const fileUploadSchema = z.object({
-  fileName: z.string().min(1, { message: 'Filename is required' }),
-  contentType: z.string().min(1, { message: 'Content type is required' }),
-  size: z.number().min(1, { message: 'Size is required' }),
+  fileName: z
+    .string()
+    .min(1, { message: "Filename is required" }),
+  contentType: z
+    .string()
+    .min(1, { message: "Content type is required" }),
+  size: z.number().min(1, { message: "Size is required" }),
   isImage: z.boolean(),
 });
 
 const aj = arcjet
   .withRule(
     detectBot({
-      mode: 'LIVE',
+      mode: "LIVE",
       allow: [],
     })
   )
-  .withRule(fixedWindow({ mode: 'LIVE', window: '1m', max: 5 }));
+  .withRule(
+    fixedWindow({ mode: "LIVE", window: "1m", max: 5 })
+  );
 
 export async function POST(request: Request) {
   const session = await requiredAdmin();
@@ -33,7 +42,10 @@ export async function POST(request: Request) {
     });
 
     if (decision.isDenied()) {
-      return NextResponse.json({ error: 'Not good' }, { status: 429 });
+      return NextResponse.json(
+        { error: "Not good" },
+        { status: 429 }
+      );
     }
 
     const body = await request.json();
@@ -41,7 +53,7 @@ export async function POST(request: Request) {
     const validation = fileUploadSchema.safeParse(body);
     if (!validation.success) {
       return NextResponse.json(
-        { error: 'Invalid Request Body' },
+        { error: "Invalid Request Body" },
         { status: 400 }
       );
     }
@@ -69,7 +81,7 @@ export async function POST(request: Request) {
     return NextResponse.json(response);
   } catch (error) {
     return NextResponse.json(
-      { error: 'Failed to generate presigned URL' },
+      { error: "Failed to generate presigned URL" },
       { status: 500 }
     );
   }

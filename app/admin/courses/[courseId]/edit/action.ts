@@ -1,9 +1,12 @@
-'use server';
+"use server";
 
-import { requiredAdmin } from '@/app/data/admin/require-admin';
-import arcjet, { detectBot, fixedWindow } from '@/lib/arcjet';
-import { prisma } from '@/lib/db';
-import { ApiResponse } from '@/lib/types';
+import { requiredAdmin } from "@/app/data/admin/require-admin";
+import arcjet, {
+  detectBot,
+  fixedWindow,
+} from "@/lib/arcjet";
+import { prisma } from "@/lib/db";
+import { ApiResponse } from "@/lib/types";
 import {
   chapterSchema,
   ChapterSchemaType,
@@ -11,18 +14,20 @@ import {
   CourseSchemaType,
   lessonSchema,
   LessonSchemaType,
-} from '@/lib/zod-schemas';
-import { request } from '@arcjet/next';
-import { revalidatePath } from 'next/cache';
+} from "@/lib/zod-schemas";
+import { request } from "@arcjet/next";
+import { revalidatePath } from "next/cache";
 
 const aj = arcjet
   .withRule(
     detectBot({
-      mode: 'LIVE',
+      mode: "LIVE",
       allow: [],
     })
   )
-  .withRule(fixedWindow({ mode: 'LIVE', window: '1m', max: 5 }));
+  .withRule(
+    fixedWindow({ mode: "LIVE", window: "1m", max: 5 })
+  );
 
 export async function editCourse(
   data: CourseSchemaType,
@@ -39,13 +44,15 @@ export async function editCourse(
     if (decision.isDenied()) {
       if (decision.reason.isRateLimit()) {
         return {
-          status: 'error',
-          message: 'You have been blocked due to rate limiting',
+          status: "error",
+          message:
+            "You have been blocked due to rate limiting",
         };
       } else {
         return {
-          status: 'error',
-          message: 'You are bot! If this is a mistake, contact our support',
+          status: "error",
+          message:
+            "You are bot! If this is a mistake, contact our support",
         };
       }
     }
@@ -53,8 +60,8 @@ export async function editCourse(
     const result = courseSchema.safeParse(data);
     if (!result.success) {
       return {
-        status: 'error',
-        message: 'Invalid data',
+        status: "error",
+        message: "Invalid data",
       };
     }
 
@@ -69,13 +76,13 @@ export async function editCourse(
     });
 
     return {
-      status: 'success',
-      message: 'Course updated successfully',
+      status: "success",
+      message: "Course updated successfully",
     };
   } catch {
     return {
-      status: 'error',
-      message: 'Failed to update course',
+      status: "error",
+      message: "Failed to update course",
     };
   }
 }
@@ -90,8 +97,8 @@ export async function reorderLessons(
   try {
     if (!lessons || lessons.length === 0) {
       return {
-        status: 'error',
-        message: 'No lessons provided for reordering',
+        status: "error",
+        message: "No lessons provided for reordering",
       };
     }
 
@@ -112,13 +119,13 @@ export async function reorderLessons(
     revalidatePath(`/admin/courses/${courseId}/edit`);
 
     return {
-      status: 'success',
-      message: 'Lessons reordered successfully',
+      status: "success",
+      message: "Lessons reordered successfully",
     };
   } catch (error) {
     return {
-      status: 'error',
-      message: 'Failed to reorder lessons',
+      status: "error",
+      message: "Failed to reorder lessons",
     };
   }
 }
@@ -130,8 +137,8 @@ export async function reorderChapters(
   try {
     if (!chapters || chapters.length === 0) {
       return {
-        status: 'error',
-        message: 'No chapters provided for reordering',
+        status: "error",
+        message: "No chapters provided for reordering",
       };
     }
 
@@ -152,13 +159,13 @@ export async function reorderChapters(
     revalidatePath(`/admin/courses/${courseId}/edit`);
 
     return {
-      status: 'success',
-      message: 'Chapters reordered successfully',
+      status: "success",
+      message: "Chapters reordered successfully",
     };
   } catch (error) {
     return {
-      status: 'error',
-      message: 'Failed to reorder chapters',
+      status: "error",
+      message: "Failed to reorder chapters",
     };
   }
 }
@@ -172,8 +179,8 @@ export async function createChapter(
     const result = chapterSchema.safeParse(values);
     if (!result.success) {
       return {
-        status: 'error',
-        message: 'Invalid Data',
+        status: "error",
+        message: "Invalid Data",
       };
     }
 
@@ -186,7 +193,7 @@ export async function createChapter(
           position: true,
         },
         orderBy: {
-          position: 'desc',
+          position: "desc",
         },
       });
 
@@ -199,16 +206,18 @@ export async function createChapter(
       });
     });
 
-    revalidatePath(`/admin/courses/${result.data.courseId}/edit`);
+    revalidatePath(
+      `/admin/courses/${result.data.courseId}/edit`
+    );
 
     return {
-      status: 'success',
-      message: 'Chapter created successfully',
+      status: "success",
+      message: "Chapter created successfully",
     };
   } catch (error) {
     return {
-      status: 'error',
-      message: 'Failed to create chapter',
+      status: "error",
+      message: "Failed to create chapter",
     };
   }
 }
@@ -222,8 +231,8 @@ export async function createLesson(
     const result = lessonSchema.safeParse(values);
     if (!result.success) {
       return {
-        status: 'error',
-        message: 'Invalid Data',
+        status: "error",
+        message: "Invalid Data",
       };
     }
 
@@ -236,7 +245,7 @@ export async function createLesson(
           position: true,
         },
         orderBy: {
-          position: 'desc',
+          position: "desc",
         },
       });
 
@@ -252,16 +261,18 @@ export async function createLesson(
       });
     });
 
-    revalidatePath(`/admin/courses/${result.data.courseId}/edit`);
+    revalidatePath(
+      `/admin/courses/${result.data.courseId}/edit`
+    );
 
     return {
-      status: 'success',
-      message: 'Lesson created successfully',
+      status: "success",
+      message: "Lesson created successfully",
     };
   } catch (error) {
     return {
-      status: 'error',
-      message: 'Failed to create lesson',
+      status: "error",
+      message: "Failed to create lesson",
     };
   }
 }
@@ -277,49 +288,56 @@ export async function deleteLesson({
 }): Promise<ApiResponse> {
   await requiredAdmin();
   try {
-    const chapterWithLessons = await prisma.chapter.findUnique({
-      where: {
-        id: chapterId,
-      },
-      select: {
-        lessons: {
-          orderBy: {
-            position: 'asc',
-          },
-          select: {
-            id: true,
-            position: true,
+    const chapterWithLessons =
+      await prisma.chapter.findUnique({
+        where: {
+          id: chapterId,
+        },
+        select: {
+          lessons: {
+            orderBy: {
+              position: "asc",
+            },
+            select: {
+              id: true,
+              position: true,
+            },
           },
         },
-      },
-    });
+      });
 
     if (!chapterWithLessons) {
       return {
-        status: 'error',
-        message: 'Chapter not found',
+        status: "error",
+        message: "Chapter not found",
       };
     }
 
     const lessons = chapterWithLessons.lessons;
 
-    const lessonToDelete = lessons.find((lesson) => lesson.id === lessonId);
+    const lessonToDelete = lessons.find(
+      (lesson) => lesson.id === lessonId
+    );
 
     if (!lessonToDelete) {
       return {
-        status: 'error',
-        message: 'Lesson not found in the chapter',
+        status: "error",
+        message: "Lesson not found in the chapter",
       };
     }
 
-    const remainingLessons = lessons.filter((lesson) => lesson.id !== lessonId);
+    const remainingLessons = lessons.filter(
+      (lesson) => lesson.id !== lessonId
+    );
 
-    const updates = remainingLessons.map((lesson, index) => {
-      return prisma.lesson.update({
-        where: { id: lesson.id },
-        data: { position: index + 1 },
-      });
-    });
+    const updates = remainingLessons.map(
+      (lesson, index) => {
+        return prisma.lesson.update({
+          where: { id: lesson.id },
+          data: { position: index + 1 },
+        });
+      }
+    );
 
     await prisma.$transaction([
       ...updates,
@@ -334,13 +352,14 @@ export async function deleteLesson({
     revalidatePath(`/admin/courses/${courseId}/edit`);
 
     return {
-      status: 'success',
-      message: 'Lesson deleted and positions reordered successfully',
+      status: "success",
+      message:
+        "Lesson deleted and positions reordered successfully",
     };
   } catch (error) {
     return {
-      status: 'error',
-      message: 'Failed to delete lesson',
+      status: "error",
+      message: "Failed to delete lesson",
     };
   }
 }
@@ -354,42 +373,47 @@ export async function deleteChapter({
 }): Promise<ApiResponse> {
   await requiredAdmin();
   try {
-    const courseWithChapters = await prisma.course.findUnique({
-      where: {
-        id: courseId,
-      },
-      select: {
-        chapter: {
-          orderBy: {
-            position: 'asc',
-          },
-          select: {
-            id: true,
-            position: true,
+    const courseWithChapters =
+      await prisma.course.findUnique({
+        where: {
+          id: courseId,
+        },
+        select: {
+          chapter: {
+            orderBy: {
+              position: "asc",
+            },
+            select: {
+              id: true,
+              position: true,
+            },
           },
         },
-      },
-    });
+      });
 
     if (!courseWithChapters) {
       return {
-        status: 'error',
-        message: 'Course not found',
+        status: "error",
+        message: "Course not found",
       };
     }
 
     const chapters = courseWithChapters.chapter;
 
-    const chapterToDelete = chapters.find((chap) => chap.id === chapterId);
+    const chapterToDelete = chapters.find(
+      (chap) => chap.id === chapterId
+    );
 
     if (!chapterToDelete) {
       return {
-        status: 'error',
-        message: 'Chapter not found in the course.',
+        status: "error",
+        message: "Chapter not found in the course.",
       };
     }
 
-    const remainingChapters = chapters.filter((chap) => chap.id !== chapterId);
+    const remainingChapters = chapters.filter(
+      (chap) => chap.id !== chapterId
+    );
 
     const updates = remainingChapters.map((chap, index) => {
       return prisma.chapter.update({
@@ -410,13 +434,14 @@ export async function deleteChapter({
     revalidatePath(`/admin/courses/${courseId}/edit`);
 
     return {
-      status: 'success',
-      message: 'Chapter deleted and positions reordered successfully',
+      status: "success",
+      message:
+        "Chapter deleted and positions reordered successfully",
     };
   } catch (error) {
     return {
-      status: 'error',
-      message: 'Failed to delete chapter',
+      status: "error",
+      message: "Failed to delete chapter",
     };
   }
 }

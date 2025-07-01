@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import * as React from 'react';
+import * as React from "react";
 import {
   IconCamera,
   IconChartBar,
@@ -13,11 +13,11 @@ import {
   IconSearch,
   IconSettings,
   IconUsers,
-} from '@tabler/icons-react';
+} from "@tabler/icons-react";
 
-import { NavMain } from '@/components/sidebar/nav-main';
-import { NavSecondary } from '@/components/sidebar/nav-secondary';
-import { NavUser } from '@/components/sidebar/nav-user';
+import { NavMain } from "@/components/sidebar/nav-main";
+import { NavSecondary } from "@/components/sidebar/nav-secondary";
+import { NavUser } from "@/components/sidebar/nav-user";
 import {
   Sidebar,
   SidebarContent,
@@ -26,112 +26,114 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from '@/components/ui/sidebar';
-import Link from 'next/link';
-import Image from 'next/image';
-import Logo from '@/public/logo.png';
+} from "@/components/ui/sidebar";
+import Link from "next/link";
+import Image from "next/image";
+import Logo from "@/public/logo.png";
 
 const data = {
   user: {
-    name: 'shadcn',
-    email: 'm@example.com',
-    avatar: '/avatars/shadcn.jpg',
+    name: "shadcn",
+    email: "m@example.com",
+    avatar: "/avatars/shadcn.jpg",
   },
   navMain: [
     {
-      title: 'Dashboard',
-      url: '/admin',
+      title: "Dashboard",
+      url: "/admin",
       icon: IconDashboard,
     },
     {
-      title: 'Courses',
-      url: '/admin/courses',
+      title: "Courses",
+      url: "/admin/courses",
       icon: IconListDetails,
     },
     {
-      title: 'Analytics',
-      url: '#',
+      title: "Analytics",
+      url: "#",
       icon: IconChartBar,
     },
     {
-      title: 'Projects',
-      url: '#',
+      title: "Projects",
+      url: "#",
       icon: IconFolder,
     },
     {
-      title: 'Team',
-      url: '#',
+      title: "Team",
+      url: "#",
       icon: IconUsers,
     },
   ],
   navClouds: [
     {
-      title: 'Capture',
+      title: "Capture",
       icon: IconCamera,
       isActive: true,
-      url: '#',
+      url: "#",
       items: [
         {
-          title: 'Active Proposals',
-          url: '#',
+          title: "Active Proposals",
+          url: "#",
         },
         {
-          title: 'Archived',
-          url: '#',
+          title: "Archived",
+          url: "#",
         },
       ],
     },
     {
-      title: 'Proposal',
+      title: "Proposal",
       icon: IconFileDescription,
-      url: '#',
+      url: "#",
       items: [
         {
-          title: 'Active Proposals',
-          url: '#',
+          title: "Active Proposals",
+          url: "#",
         },
         {
-          title: 'Archived',
-          url: '#',
+          title: "Archived",
+          url: "#",
         },
       ],
     },
     {
-      title: 'Prompts',
+      title: "Prompts",
       icon: IconFileAi,
-      url: '#',
+      url: "#",
       items: [
         {
-          title: 'Active Proposals',
-          url: '#',
+          title: "Active Proposals",
+          url: "#",
         },
         {
-          title: 'Archived',
-          url: '#',
+          title: "Archived",
+          url: "#",
         },
       ],
     },
   ],
   navSecondary: [
     {
-      title: 'Settings',
-      url: '#',
+      title: "Settings",
+      url: "#",
       icon: IconSettings,
     },
     {
-      title: 'Get Help',
-      url: '#',
+      title: "Get Help",
+      url: "#",
       icon: IconHelp,
     },
     {
-      title: 'Search',
-      url: '#',
+      title: "Search",
+      url: "#",
       icon: IconSearch,
     },
   ],
 };
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({
+  ...props
+}: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
@@ -143,7 +145,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             >
               <Link href="/">
                 {/* <Image src={Logo} alt="Logo" className="size-5" /> */}
-                <span className="text-base font-semibold">Acme Inc.</span>
+                <span className="text-base font-semibold">
+                  Acme Inc.
+                </span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -151,7 +155,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavSecondary items={data.navSecondary} className="mt-auto" />
+        <NavSecondary
+          items={data.navSecondary}
+          className="mt-auto"
+        />
       </SidebarContent>
       <SidebarFooter>
         <NavUser />

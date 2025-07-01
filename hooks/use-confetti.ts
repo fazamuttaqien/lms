@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import confetti from 'canvas-confetti';
+import confetti from "canvas-confetti";
 
 export const useConfetti = () => {
   const triggerConfetti = () => {
@@ -9,7 +9,10 @@ export const useConfetti = () => {
       origin: { y: 0.7 },
     };
 
-    function fire(particleRatio: number, opts: Record<string, unknown>) {
+    function fire(
+      particleRatio: number,
+      opts: Record<string, unknown>
+    ) {
       confetti({
         ...defaults,
         ...opts,

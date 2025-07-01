@@ -1,7 +1,10 @@
-import { requiredAdmin } from '@/app/data/admin/require-admin';
-import { prisma } from '@/lib/db';
-import { ApiResponse } from '@/lib/types';
-import { lessonSchema, LessonSchemaType } from '@/lib/zod-schemas';
+import { requiredAdmin } from "@/app/data/admin/require-admin";
+import { prisma } from "@/lib/db";
+import { ApiResponse } from "@/lib/types";
+import {
+  lessonSchema,
+  LessonSchemaType,
+} from "@/lib/zod-schemas";
 
 export async function updateLesson(
   values: LessonSchemaType,
@@ -13,8 +16,8 @@ export async function updateLesson(
     const result = lessonSchema.safeParse(values);
     if (!result.success) {
       return {
-        status: 'error',
-        message: 'Invalid data',
+        status: "error",
+        message: "Invalid data",
       };
     }
 
@@ -31,13 +34,13 @@ export async function updateLesson(
     });
 
     return {
-      status: 'success',
-      message: 'Course updated successfully',
+      status: "success",
+      message: "Course updated successfully",
     };
   } catch (error) {
     return {
-      status: 'error',
-      message: 'Failed to update  course',
+      status: "error",
+      message: "Failed to update  course",
     };
   }
 }
