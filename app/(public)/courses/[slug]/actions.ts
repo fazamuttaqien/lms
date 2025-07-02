@@ -1,6 +1,6 @@
 "use server";
 
-import { requireUser } from "@/app/data/user/require-user";
+import { requiredUser } from "@/app/data/user/require-user";
 import arcjet, { fixedWindow } from "@/lib/arcjet";
 import { prisma } from "@/lib/db";
 import { env } from "@/lib/env";
@@ -21,7 +21,7 @@ const aj = arcjet.withRule(
 export async function enrollInCourseAction(
   courseId: string
 ): Promise<ApiResponse> {
-  const user = await requireUser();
+  const user = await requiredUser();
 
   let checkoutUrl: string;
   try {

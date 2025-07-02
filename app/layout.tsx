@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { ThemeProvider } from "@/components/theme-provider";
+import { ThemeProvider } from "@/components/theme/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
+import { ReactNode } from "react";
 
 export const metadata: Metadata = {
-  title: "LMS",
+  title: "Learning Management System",
 };
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>

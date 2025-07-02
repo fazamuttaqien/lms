@@ -1,13 +1,9 @@
 import {
-  BoltIcon,
   BookOpen,
   ChevronDownIcon,
   Home,
-  Layers2Icon,
   LayoutDashboard,
   LogOutIcon,
-  PinIcon,
-  UserPenIcon,
 } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -26,13 +22,13 @@ import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
-interface IAppProps {
+interface iAppProps {
   name: string;
   email: string;
   image: string;
 }
 
-export function UserDropdown({ name, email, image }: IAppProps) {
+export function UserDropdown({ name, email, image }: iAppProps) {
   const router = useRouter();
 
   async function signOut() {
@@ -82,7 +78,7 @@ export function UserDropdown({ name, email, image }: IAppProps) {
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
-            <Link href="/course">
+            <Link href="/admin/courses">
               <BookOpen size={16} className="opacity-60" aria-hidden="true" />
               <span>Courses</span>
             </Link>
@@ -94,7 +90,7 @@ export function UserDropdown({ name, email, image }: IAppProps) {
                 className="opacity-60"
                 aria-hidden="true"
               />
-              <span>Dashboard</span>
+              <span>Admin</span>
             </Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>

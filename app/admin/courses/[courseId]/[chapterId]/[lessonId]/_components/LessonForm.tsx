@@ -30,13 +30,13 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { updateLesson } from "../actions";
 
-interface IAppProps {
+interface iAppProps {
   data: AdminLessonType;
   chapterId: string;
   courseId: string;
 }
 
-export function LessonForm({ chapterId, courseId, data }: IAppProps) {
+export function LessonForm({ chapterId, courseId, data }: iAppProps) {
   const [pending, startTransition] = useTransition();
 
   const form = useForm<LessonSchemaType>({

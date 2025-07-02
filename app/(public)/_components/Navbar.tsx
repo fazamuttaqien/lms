@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import Logo from "@/public/logo.png";
-import { ThemeToggle } from "@/components/theme-toogle";
+import { ThemeToggle } from "@/components/theme/theme-toogle";
 import { authClient } from "@/lib/auth-client";
 import { buttonVariants } from "@/components/ui/button";
 import { UserDropdown } from "./UserDropdown";
@@ -11,7 +11,7 @@ import { UserDropdown } from "./UserDropdown";
 const navigationItems = [
   { name: "Home", href: "/" },
   { name: "Courses", href: "/courses" },
-  { name: "Dashboard", href: "/admin" },
+  { name: "Dashboard", href: "/dashboard" },
 ];
 
 export function Navbar() {

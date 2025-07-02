@@ -22,11 +22,11 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 
-interface IAppProps {
+interface iAppProps {
   data: AdminCourseType;
 }
 
-export function AdminCourseCard({ data }: IAppProps) {
+export function AdminCourseCard({ data }: iAppProps) {
   const thumbnailUrl = useConstructUrl(data.fileKey);
   return (
     <Card className="group relative py-0 gap-0">

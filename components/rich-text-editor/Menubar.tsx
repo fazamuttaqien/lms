@@ -24,11 +24,11 @@ import {
 import { cn } from "@/lib/utils";
 import { Button } from "../ui/button";
 
-interface IAppProps {
+interface iAppProps {
   editor: Editor | null;
 }
 
-export function Menubar({ editor }: IAppProps) {
+export function Menubar({ editor }: iAppProps) {
   if (!editor) {
     return null;
   }

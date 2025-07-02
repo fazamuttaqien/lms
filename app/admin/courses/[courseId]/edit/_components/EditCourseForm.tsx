@@ -38,11 +38,11 @@ import slugify from "slugify";
 import { editCourse } from "../action";
 import { AdminCourseSingularType } from "@/app/data/admin/admin-get-course";
 
-interface IAppProps {
+interface iAppProps {
   data: AdminCourseSingularType;
 }
 
-export function EditCourseForm({ data }: IAppProps) {
+export function EditCourseForm({ data }: iAppProps) {
   const [pending, startTransition] = useTransition();
   const router = useRouter();
 

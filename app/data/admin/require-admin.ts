@@ -5,7 +5,7 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { cache } from "react";
 
-export const requireAdmin = cache(async () => {
+export const requiredAdmin = cache(async () => {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
