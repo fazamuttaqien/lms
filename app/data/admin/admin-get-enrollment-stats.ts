@@ -1,6 +1,7 @@
 import "server-only";
 
 import { prisma } from "@/lib/db";
+
 import { requiredAdmin } from "./require-admin";
 
 export async function adminGetEnrollmentStats() {
@@ -37,10 +38,10 @@ export async function adminGetEnrollmentStats() {
     });
   }
 
-  enrollments.forEach((enrollment) => {
+  enrollments.forEach(enrollment => {
     const enrollmentDate = enrollment.createdAt.toISOString().split("T")[0];
 
-    const dayIndex = last30Days.findIndex((day) => day.date === enrollmentDate);
+    const dayIndex = last30Days.findIndex(day => day.date === enrollmentDate);
 
     if (dayIndex !== -1) {
       last30Days[dayIndex].enrollments++;

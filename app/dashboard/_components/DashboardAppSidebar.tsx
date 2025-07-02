@@ -1,6 +1,9 @@
 "use client";
 
 import * as React from "react";
+
+import Link from "next/link";
+
 import {
   IconCamera,
   IconDashboard,
@@ -11,9 +14,6 @@ import {
   IconSettings,
 } from "@tabler/icons-react";
 
-import { NavMain } from "@/components/sidebar/nav-main";
-import { NavSecondary } from "@/components/sidebar/nav-secondary";
-import { NavUser } from "@/components/sidebar/nav-user";
 import {
   Sidebar,
   SidebarContent,
@@ -23,7 +23,10 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import Link from "next/link";
+
+import { NavMain } from "@/components/sidebar/nav-main";
+import { NavSecondary } from "@/components/sidebar/nav-secondary";
+import { NavUser } from "@/components/sidebar/nav-user";
 
 const data = {
   user: {
@@ -109,17 +112,17 @@ export function DashboardAppSidebar({
   ...props
 }: React.ComponentProps<typeof Sidebar>) {
   return (
-    <Sidebar collapsible="offcanvas" {...props}>
+    <Sidebar collapsible='offcanvas' {...props}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton
               asChild
-              className="data-[slot=sidebar-menu-button]:!p-1.5"
+              className='data-[slot=sidebar-menu-button]:!p-1.5'
             >
-              <Link href="/">
+              <Link href='/'>
                 {/* <Image src={Logo} alt="Logo" className="size-5" /> */}
-                <span className="text-base font-semibold">Acme Inc.</span>
+                <span className='text-base font-semibold'>Acme Inc.</span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -127,7 +130,7 @@ export function DashboardAppSidebar({
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavSecondary items={data.navSecondary} className="mt-auto" />
+        <NavSecondary items={data.navSecondary} className='mt-auto' />
       </SidebarContent>
       <SidebarFooter>
         <NavUser />

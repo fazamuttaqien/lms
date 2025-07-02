@@ -1,7 +1,10 @@
-import { buttonVariants } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import { Check, Play } from "lucide-react";
 import Link from "next/link";
+
+import { Check, Play } from "lucide-react";
+
+import { buttonVariants } from "@/components/ui/button";
+
+import { cn } from "@/lib/utils";
 
 interface iAppProps {
   lesson: {
@@ -22,9 +25,9 @@ export function LessonItem({ lesson, slug, isActive, completed }: iAppProps) {
       className={buttonVariants({
         variant: completed ? "secondary" : "outline",
         className: cn(
-          "w-full p-2.5 h-auto justify-start transition-all",
+          "h-auto w-full justify-start p-2.5 transition-all",
           completed &&
-            "bg-green-100 dark:bg-green-900/30 border-green-300 dark:border-green-700 hover:bg-green-200 dark:hover:bg-green-900/50 text-green-800 dark:text-green-200",
+            "border-green-300 bg-green-100 text-green-800 hover:bg-green-200 dark:border-green-700 dark:bg-green-900/30 dark:text-green-200 dark:hover:bg-green-900/50",
 
           isActive &&
             !completed &&
@@ -32,16 +35,16 @@ export function LessonItem({ lesson, slug, isActive, completed }: iAppProps) {
         ),
       })}
     >
-      <div className="flex items-center gap-2.5 w-full min-w-0">
-        <div className="shrink-0">
+      <div className='flex w-full min-w-0 items-center gap-2.5'>
+        <div className='shrink-0'>
           {completed ? (
-            <div className="size-5 rounded-full bg-green-600 dark:bg-green-500 flex items-center justify-center">
-              <Check className="size-3 text-white" />
+            <div className='flex size-5 items-center justify-center rounded-full bg-green-600 dark:bg-green-500'>
+              <Check className='size-3 text-white' />
             </div>
           ) : (
             <div
               className={cn(
-                "size-5 rounded-full border-2 bg-background flex justify-center items-center",
+                "bg-background flex size-5 items-center justify-center rounded-full border-2",
                 isActive
                   ? "border-primary bg-primary/10 dark:bg-primary/20"
                   : "border-muted-foreground/60"
@@ -57,10 +60,10 @@ export function LessonItem({ lesson, slug, isActive, completed }: iAppProps) {
           )}
         </div>
 
-        <div className="flex text-left min-w-0">
+        <div className='flex min-w-0 text-left'>
           <p
             className={cn(
-              "text-xs font-medium truncate",
+              "truncate text-xs font-medium",
               completed
                 ? "text-green-800 dark:text-green-200"
                 : isActive
@@ -71,13 +74,13 @@ export function LessonItem({ lesson, slug, isActive, completed }: iAppProps) {
             {lesson.position}. {lesson.title}
           </p>
           {completed && (
-            <p className="text-[10px] text-green-700 dark:text-green-300 font-medium">
+            <p className='text-[10px] font-medium text-green-700 dark:text-green-300'>
               Completed
             </p>
           )}
 
           {isActive && !completed && (
-            <p className="text-[10px] text-primary font-medium">
+            <p className='text-primary text-[10px] font-medium'>
               Currently Watching
             </p>
           )}

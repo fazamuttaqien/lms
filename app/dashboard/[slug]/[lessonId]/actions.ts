@@ -1,9 +1,11 @@
 "use server";
 
-import { requiredUser } from "@/app/data/user/require-user";
+import { revalidatePath } from "next/cache";
+
 import { prisma } from "@/lib/db";
 import { ApiResponse } from "@/lib/types";
-import { revalidatePath } from "next/cache";
+
+import { requiredUser } from "@/app/data/user/require-user";
 
 export async function markLessonComplete(
   lessonId: string,

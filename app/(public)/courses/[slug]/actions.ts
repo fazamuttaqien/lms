@@ -1,14 +1,17 @@
 "use server";
 
-import { requiredUser } from "@/app/data/user/require-user";
+import { redirect } from "next/navigation";
+
+import { request } from "@arcjet/next";
+import Stripe from "stripe";
+
 import arcjet, { fixedWindow } from "@/lib/arcjet";
 import { prisma } from "@/lib/db";
 import { env } from "@/lib/env";
 import { stripe } from "@/lib/stripe";
 import { ApiResponse } from "@/lib/types";
-import { request } from "@arcjet/next";
-import { redirect } from "next/navigation";
-import Stripe from "stripe";
+
+import { requiredUser } from "@/app/data/user/require-user";
 
 const aj = arcjet.withRule(
   fixedWindow({
@@ -89,7 +92,7 @@ export async function enrollInCourseAction(
       });
     }
 
-    const result = await prisma.$transaction(async (tx) => {
+    const result = await prisma.$transaction(async tx => {
       const existingEnrollment = await tx.enrollment.findUnique({
         where: {
           userId_courseId: {

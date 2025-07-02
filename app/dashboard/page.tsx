@@ -1,7 +1,8 @@
 import { EmptyState } from "@/components/general/EmptyState";
+
+import { PublicCourseCard } from "../(public)/_components/PublicCourseCard";
 import { getAllCourses } from "../data/course/get-all-courses";
 import { getEnrolledCourse } from "../data/user/get-enrolled-courses";
-import { PublicCourseCard } from "../(public)/_components/PublicCourseCard";
 import { CourseProgressCard } from "./_components/CourseProgressCard";
 
 export default async function DashboardPage() {
@@ -12,57 +13,57 @@ export default async function DashboardPage() {
 
   return (
     <>
-      <div className="flex flex-col gap-2">
-        <h1 className="text-3xl font-bold">Enrolled Course</h1>
-        <p className="text-muted-foreground">
+      <div className='flex flex-col gap-2'>
+        <h1 className='text-3xl font-bold'>Enrolled Course</h1>
+        <p className='text-muted-foreground'>
           Here you can see all the courses you have access to
         </p>
       </div>
 
       {enrolledCourses.length === 0 ? (
         <EmptyState
-          title="No courses purchased"
+          title='No courses purchased'
           description="You haven't purchased any courses yet."
-          buttonText="Browse Courses"
-          href="/courses"
+          buttonText='Browse Courses'
+          href='/courses'
         />
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {enrolledCourses.map((course) => (
+        <div className='grid grid-cols-1 gap-6 md:grid-cols-2'>
+          {enrolledCourses.map(course => (
             <CourseProgressCard key={course.course.id} data={course} />
           ))}
         </div>
       )}
 
-      <section className="mt-10">
-        <div className="flex flex-col gap-2 mb-5">
-          <h1 className="text-3xl font-bold">Avaiable Courses</h1>
-          <p className="text-muted-foreground">
+      <section className='mt-10'>
+        <div className='mb-5 flex flex-col gap-2'>
+          <h1 className='text-3xl font-bold'>Avaiable Courses</h1>
+          <p className='text-muted-foreground'>
             Here you can see all the courses you can purchase
           </p>
         </div>
         {courses.filter(
-          (course) =>
+          course =>
             !enrolledCourses.some(
               ({ course: enrolled }) => enrolled.id === course.id
             )
         ).length === 0 ? (
           <EmptyState
-            title="No courses avaiable"
-            description="You have already purchases all available courses"
-            buttonText="Browse Courses"
-            href="/courses"
+            title='No courses avaiable'
+            description='You have already purchases all available courses'
+            buttonText='Browse Courses'
+            href='/courses'
           />
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className='grid grid-cols-1 gap-6 md:grid-cols-2'>
             {courses
               .filter(
-                (course) =>
+                course =>
                   !enrolledCourses.some(
                     ({ course: enrolled }) => enrolled.id === course.id
                   )
               )
-              .map((course) => (
+              .map(course => (
                 <PublicCourseCard key={course.id} data={course} />
               ))}
           </div>

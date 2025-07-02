@@ -1,12 +1,5 @@
 import { type Editor } from "@tiptap/react";
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "../ui/tooltip";
-import { Toggle } from "../ui/toggle";
-import {
   AlignCenter,
   AlignLeft,
   AlignRight,
@@ -21,8 +14,17 @@ import {
   Strikethrough,
   Undo,
 } from "lucide-react";
+
 import { cn } from "@/lib/utils";
+
 import { Button } from "../ui/button";
+import { Toggle } from "../ui/toggle";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "../ui/tooltip";
 
 interface iAppProps {
   editor: Editor | null;
@@ -34,13 +36,13 @@ export function Menubar({ editor }: iAppProps) {
   }
 
   return (
-    <div className="border border-input border-t-0 border-x-0 rounded-t-lg p-2 bg-card flex flex-wrap gap-1 items-center">
+    <div className='border-input bg-card flex flex-wrap items-center gap-1 rounded-t-lg border border-x-0 border-t-0 p-2'>
       <TooltipProvider>
-        <div className="flex flex-wrap gap-1">
+        <div className='flex flex-wrap gap-1'>
           <Tooltip>
             <TooltipTrigger asChild>
               <Toggle
-                size="sm"
+                size='sm'
                 pressed={editor.isActive("bold")}
                 onPressedChange={() =>
                   editor.chain().focus().toggleBold().run()
@@ -57,7 +59,7 @@ export function Menubar({ editor }: iAppProps) {
           <Tooltip>
             <TooltipTrigger asChild>
               <Toggle
-                size="sm"
+                size='sm'
                 pressed={editor.isActive("italic")}
                 onPressedChange={() =>
                   editor.chain().focus().toggleItalic().run()
@@ -74,7 +76,7 @@ export function Menubar({ editor }: iAppProps) {
           <Tooltip>
             <TooltipTrigger asChild>
               <Toggle
-                size="sm"
+                size='sm'
                 pressed={editor.isActive("strike")}
                 onPressedChange={() =>
                   editor.chain().focus().toggleStrike().run()
@@ -91,7 +93,7 @@ export function Menubar({ editor }: iAppProps) {
           <Tooltip>
             <TooltipTrigger asChild>
               <Toggle
-                size="sm"
+                size='sm'
                 pressed={editor.isActive("heading")}
                 onPressedChange={() =>
                   editor.chain().focus().toggleHeading({ level: 1 }).run()
@@ -110,7 +112,7 @@ export function Menubar({ editor }: iAppProps) {
           <Tooltip>
             <TooltipTrigger asChild>
               <Toggle
-                size="sm"
+                size='sm'
                 pressed={editor.isActive("heading")}
                 onPressedChange={() =>
                   editor.chain().focus().toggleHeading({ level: 2 }).run()
@@ -129,7 +131,7 @@ export function Menubar({ editor }: iAppProps) {
           <Tooltip>
             <TooltipTrigger asChild>
               <Toggle
-                size="sm"
+                size='sm'
                 pressed={editor.isActive("heading")}
                 onPressedChange={() =>
                   editor.chain().focus().toggleHeading({ level: 3 }).run()
@@ -148,7 +150,7 @@ export function Menubar({ editor }: iAppProps) {
           <Tooltip>
             <TooltipTrigger asChild>
               <Toggle
-                size="sm"
+                size='sm'
                 pressed={editor.isActive("bulletList")}
                 onPressedChange={() =>
                   editor.chain().focus().toggleBulletList().run()
@@ -166,7 +168,7 @@ export function Menubar({ editor }: iAppProps) {
           <Tooltip>
             <TooltipTrigger asChild>
               <Toggle
-                size="sm"
+                size='sm'
                 pressed={editor.isActive("orderedList")}
                 onPressedChange={() =>
                   editor.chain().focus().toggleOrderedList().run()
@@ -183,12 +185,12 @@ export function Menubar({ editor }: iAppProps) {
           </Tooltip>
         </div>
 
-        <div className="w-px h-6 bg-border mx-2"></div>
-        <div className="flex flex-wrap gap-1">
+        <div className='bg-border mx-2 h-6 w-px'></div>
+        <div className='flex flex-wrap gap-1'>
           <Tooltip>
             <TooltipTrigger asChild>
               <Toggle
-                size="sm"
+                size='sm'
                 pressed={editor.isActive({
                   textAlign: "left",
                 })}
@@ -208,7 +210,7 @@ export function Menubar({ editor }: iAppProps) {
           <Tooltip>
             <TooltipTrigger asChild>
               <Toggle
-                size="sm"
+                size='sm'
                 pressed={editor.isActive({
                   textAlign: "center",
                 })}
@@ -229,7 +231,7 @@ export function Menubar({ editor }: iAppProps) {
           <Tooltip>
             <TooltipTrigger asChild>
               <Toggle
-                size="sm"
+                size='sm'
                 pressed={editor.isActive({
                   textAlign: "right",
                 })}
@@ -248,14 +250,14 @@ export function Menubar({ editor }: iAppProps) {
           </Tooltip>
         </div>
 
-        <div className="w-px h-6 bg-border mx-2"></div>
-        <div className="flex flex-wrap gap-1">
+        <div className='bg-border mx-2 h-6 w-px'></div>
+        <div className='flex flex-wrap gap-1'>
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
-                size="sm"
-                variant="ghost"
-                type="button"
+                size='sm'
+                variant='ghost'
+                type='button'
                 onClick={() => editor.chain().focus().undo().run()}
                 disabled={!editor.can().undo()}
               >
@@ -268,9 +270,9 @@ export function Menubar({ editor }: iAppProps) {
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
-                size="sm"
-                variant="ghost"
-                type="button"
+                size='sm'
+                variant='ghost'
+                type='button'
                 onClick={() => editor.chain().focus().redo().run()}
                 disabled={!editor.can().redo()}
               >

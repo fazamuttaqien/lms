@@ -1,10 +1,11 @@
 import "server-only";
 
 import { prisma } from "@/lib/db";
+
 import { requiredAdmin } from "./require-admin";
 
 export async function adminGetCourses() {
-  await new Promise((resolve) => setTimeout(resolve, 2000));
+  await new Promise(resolve => setTimeout(resolve, 2000));
 
   await requiredAdmin();
 

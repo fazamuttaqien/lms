@@ -1,6 +1,8 @@
-import { prisma } from "@/lib/db";
-import { requiredUser } from "./require-user";
 import { notFound } from "next/navigation";
+
+import { prisma } from "@/lib/db";
+
+import { requiredUser } from "./require-user";
 
 export async function getCourseSidebarData(slug: string) {
   const session = await requiredUser();

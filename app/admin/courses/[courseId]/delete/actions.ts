@@ -1,11 +1,14 @@
 "use server";
 
-import { requiredAdmin } from "@/app/data/admin/require-admin";
+import { revalidatePath } from "next/cache";
+
+import { request } from "@arcjet/next";
+
 import arcjet, { fixedWindow } from "@/lib/arcjet";
 import { prisma } from "@/lib/db";
 import { ApiResponse } from "@/lib/types";
-import { request } from "@arcjet/next";
-import { revalidatePath } from "next/cache";
+
+import { requiredAdmin } from "@/app/data/admin/require-admin";
 
 const aj = arcjet.withRule(
   fixedWindow({

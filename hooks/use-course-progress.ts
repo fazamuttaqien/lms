@@ -1,7 +1,8 @@
 "use client";
 
-import { CourseSidebarDataType } from "@/app/data/user/get-course-sidebar-data";
 import { useMemo } from "react";
+
+import { CourseSidebarDataType } from "@/app/data/user/get-course-sidebar-data";
 
 interface iAppProps {
   courseData: CourseSidebarDataType["course"];
@@ -20,13 +21,13 @@ export function useCourseProgress({
     let totalLessons = 0;
     let completedLessons = 0;
 
-    courseData.chapter.forEach((chapter) => {
-      chapter.lessons.forEach((lesson) => {
+    courseData.chapter.forEach(chapter => {
+      chapter.lessons.forEach(lesson => {
         totalLessons++;
 
         // Check if this lesson is completed
         const isCompleted = lesson.lessonProgress.some(
-          (progress) => progress.lessonId === lesson.id && progress.completed
+          progress => progress.lessonId === lesson.id && progress.completed
         );
 
         if (isCompleted) {

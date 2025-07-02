@@ -1,3 +1,10 @@
+import { useState, useTransition } from "react";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Plus } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -8,11 +15,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { lessonSchema, LessonSchemaType } from "@/lib/zod-schemas";
-import { Plus } from "lucide-react";
-import { useState, useTransition } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
   FormControl,
@@ -22,9 +24,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { createChapter, createLesson } from "../action";
-import { toast } from "sonner";
+
 import { tryCatch } from "@/lib/try-catch";
+import { LessonSchemaType, lessonSchema } from "@/lib/zod-schemas";
+
+import { createChapter, createLesson } from "../action";
 
 export function NewLessonModal({
   courseId,
@@ -74,11 +78,11 @@ export function NewLessonModal({
   return (
     <Dialog open={isOpen} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
-        <Button variant="outline" className="w-full justify-center gap-1">
-          <Plus className="size=4" /> New Lesson
+        <Button variant='outline' className='w-full justify-center gap-1'>
+          <Plus className='size=4' /> New Lesson
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className='sm:max-w-[425px]'>
         <DialogHeader>
           <DialogTitle>Create new lesson</DialogTitle>
           <DialogDescription>
@@ -86,15 +90,15 @@ export function NewLessonModal({
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form className="space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
+          <form className='space-y-8' onSubmit={form.handleSubmit(onSubmit)}>
             <FormField
               control={form.control}
-              name="name"
+              name='name'
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Lesson name" {...field} />
+                    <Input placeholder='Lesson name' {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -102,7 +106,7 @@ export function NewLessonModal({
             />
 
             <DialogFooter>
-              <Button disabled={pending} type="submit">
+              <Button disabled={pending} type='submit'>
                 {pending ? "Saving..." : "Save Change"}
               </Button>
             </DialogFooter>

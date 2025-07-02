@@ -1,9 +1,13 @@
-import { tryCatch } from "@/lib/try-catch";
 import { useTransition } from "react";
-import { toast } from "sonner";
-import { enrollInCourseAction } from "../actions";
-import { Button } from "@/components/ui/button";
+
 import { Loader2 } from "lucide-react";
+import { toast } from "sonner";
+
+import { Button } from "@/components/ui/button";
+
+import { tryCatch } from "@/lib/try-catch";
+
+import { enrollInCourseAction } from "../actions";
 
 export function EnrollmentButton({ courseId }: { courseId: string }) {
   const [isPending, startTransition] = useTransition();
@@ -26,10 +30,10 @@ export function EnrollmentButton({ courseId }: { courseId: string }) {
   }
 
   return (
-    <Button onClick={onSubmit} disabled={isPending} className="w-full">
+    <Button onClick={onSubmit} disabled={isPending} className='w-full'>
       {isPending ? (
         <>
-          <Loader2 className="size-4 animate-spin" />
+          <Loader2 className='size-4 animate-spin' />
         </>
       ) : (
         "Enroll Now"

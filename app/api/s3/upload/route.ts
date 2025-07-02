@@ -1,14 +1,17 @@
 import { NextResponse } from "next/server";
-import { z } from "zod";
-import { v4 as uuidv4 } from "uuid";
+
 import { PutObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import { v4 as uuidv4 } from "uuid";
+import { z } from "zod";
+
+import arcjet, { fixedWindow } from "@/lib/arcjet";
 import { env } from "@/lib/env";
 import { S3 } from "@/lib/s3-client";
-import arcjet, { fixedWindow } from "@/lib/arcjet";
+
 import { requiredAdmin } from "@/app/data/admin/require-admin";
 
-export const fileUploadSchema = z.object({
+const fileUploadSchema = z.object({
   fileName: z.string().min(1, { message: "Filename is required" }),
   contentType: z.string().min(1, { message: "Content type is required" }),
   size: z.number().min(1, { message: "Size is required" }),

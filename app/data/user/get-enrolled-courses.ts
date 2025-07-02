@@ -1,6 +1,8 @@
 import "server-only";
-import { requiredUser } from "./require-user";
+
 import { prisma } from "@/lib/db";
+
+import { requiredUser } from "./require-user";
 
 export async function getEnrolledCourse() {
   const user = await requiredUser();

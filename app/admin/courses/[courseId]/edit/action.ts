@@ -1,19 +1,22 @@
 "use server";
 
-import { requiredAdmin } from "@/app/data/admin/require-admin";
+import { revalidatePath } from "next/cache";
+
+import { request } from "@arcjet/next";
+
 import arcjet, { fixedWindow } from "@/lib/arcjet";
 import { prisma } from "@/lib/db";
 import { ApiResponse } from "@/lib/types";
 import {
-  chapterSchema,
   ChapterSchemaType,
-  courseSchema,
   CourseSchemaType,
-  lessonSchema,
   LessonSchemaType,
+  chapterSchema,
+  courseSchema,
+  lessonSchema,
 } from "@/lib/zod-schemas";
-import { request } from "@arcjet/next";
-import { revalidatePath } from "next/cache";
+
+import { requiredAdmin } from "@/app/data/admin/require-admin";
 
 const aj = arcjet.withRule(fixedWindow({ mode: "LIVE", window: "1m", max: 5 }));
 
@@ -88,7 +91,7 @@ export async function reorderLessons(
       };
     }
 
-    const updates = lessons.map((lesson) =>
+    const updates = lessons.map(lesson =>
       prisma.lesson.update({
         where: {
           id: lesson.id,
@@ -128,7 +131,7 @@ export async function reorderChapters(
       };
     }
 
-    const updates = chapters.map((chapter) =>
+    const updates = chapters.map(chapter =>
       prisma.chapter.update({
         where: {
           id: chapter.id,
@@ -170,7 +173,7 @@ export async function createChapter(
       };
     }
 
-    await prisma.$transaction(async (tx) => {
+    await prisma.$transaction(async tx => {
       const maxPos = await tx.chapter.findFirst({
         where: {
           courseId: result.data.courseId,
@@ -220,7 +223,7 @@ export async function createLesson(
       };
     }
 
-    await prisma.$transaction(async (tx) => {
+    await prisma.$transaction(async tx => {
       const maxPos = await tx.lesson.findFirst({
         where: {
           chapterId: result.data.chapterId,
@@ -296,7 +299,7 @@ export async function deleteLesson({
 
     const lessons = chapterWithLessons.lessons;
 
-    const lessonToDelete = lessons.find((lesson) => lesson.id === lessonId);
+    const lessonToDelete = lessons.find(lesson => lesson.id === lessonId);
 
     if (!lessonToDelete) {
       return {
@@ -305,7 +308,7 @@ export async function deleteLesson({
       };
     }
 
-    const remainingLessons = lessons.filter((lesson) => lesson.id !== lessonId);
+    const remainingLessons = lessons.filter(lesson => lesson.id !== lessonId);
 
     const updates = remainingLessons.map((lesson, index) => {
       return prisma.lesson.update({
@@ -373,7 +376,7 @@ export async function deleteChapter({
 
     const chapters = courseWithChapters.chapter;
 
-    const chapterToDelete = chapters.find((chap) => chap.id === chapterId);
+    const chapterToDelete = chapters.find(chap => chap.id === chapterId);
 
     if (!chapterToDelete) {
       return {
@@ -382,7 +385,7 @@ export async function deleteChapter({
       };
     }
 
-    const remainingChapters = chapters.filter((chap) => chap.id !== chapterId);
+    const remainingChapters = chapters.filter(chap => chap.id !== chapterId);
 
     const updates = remainingChapters.map((chap, index) => {
       return prisma.chapter.update({

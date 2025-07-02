@@ -1,8 +1,10 @@
+import { notFound } from "next/navigation";
+
 import "server-only";
 
-import { requiredUser } from "../user/require-user";
 import { prisma } from "@/lib/db";
-import { notFound } from "next/navigation";
+
+import { requiredUser } from "../user/require-user";
 
 export async function getLessonContent(lessonId: string) {
   const session = await requiredUser();

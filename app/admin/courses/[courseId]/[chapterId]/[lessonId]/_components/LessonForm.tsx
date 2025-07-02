@@ -1,8 +1,14 @@
 "use client";
 
-import { AdminLessonType } from "@/app/data/admin/admin-get-lesson";
-import { Uploader } from "@/components/file-uploader/Uploader";
-import { RichTextEditor } from "@/components/rich-text-editor/Editor";
+import { useTransition } from "react";
+
+import Link from "next/link";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ArrowLeft } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Card,
@@ -20,14 +26,15 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+
+import { Uploader } from "@/components/file-uploader/Uploader";
+import { RichTextEditor } from "@/components/rich-text-editor/Editor";
+
 import { tryCatch } from "@/lib/try-catch";
-import { lessonSchema, LessonSchemaType } from "@/lib/zod-schemas";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { ArrowLeft } from "lucide-react";
-import Link from "next/link";
-import { useTransition } from "react";
-import { useForm } from "react-hook-form";
-import { toast } from "sonner";
+import { LessonSchemaType, lessonSchema } from "@/lib/zod-schemas";
+
+import { AdminLessonType } from "@/app/data/admin/admin-get-lesson";
+
 import { updateLesson } from "../actions";
 
 interface iAppProps {
@@ -77,7 +84,7 @@ export function LessonForm({ chapterId, courseId, data }: iAppProps) {
         })}
         href={`/admin/courses/${courseId}/edit`}
       >
-        <ArrowLeft className="size-4" />
+        <ArrowLeft className='size-4' />
 
         <span>Go Back</span>
       </Link>
@@ -91,15 +98,15 @@ export function LessonForm({ chapterId, courseId, data }: iAppProps) {
         </CardHeader>
         <CardContent>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-6'>
               <FormField
                 control={form.control}
-                name="name"
+                name='name'
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Lesson name</FormLabel>
                     <FormControl>
-                      <Input placeholder="Chapter..." {...field} />
+                      <Input placeholder='Chapter...' {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -107,7 +114,7 @@ export function LessonForm({ chapterId, courseId, data }: iAppProps) {
               />
               <FormField
                 control={form.control}
-                name="description"
+                name='description'
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Description</FormLabel>
@@ -120,7 +127,7 @@ export function LessonForm({ chapterId, courseId, data }: iAppProps) {
               />
               <FormField
                 control={form.control}
-                name="thumbnailKey"
+                name='thumbnailKey'
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Thumbnail Image</FormLabel>
@@ -128,7 +135,7 @@ export function LessonForm({ chapterId, courseId, data }: iAppProps) {
                       <Uploader
                         onChange={field.onChange}
                         value={field.value}
-                        fileTypeAccepted="image"
+                        fileTypeAccepted='image'
                       />
                     </FormControl>
                     <FormMessage />
@@ -137,7 +144,7 @@ export function LessonForm({ chapterId, courseId, data }: iAppProps) {
               />
               <FormField
                 control={form.control}
-                name="videoKey"
+                name='videoKey'
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>File Video</FormLabel>
@@ -145,7 +152,7 @@ export function LessonForm({ chapterId, courseId, data }: iAppProps) {
                       <Uploader
                         onChange={field.onChange}
                         value={field.value}
-                        fileTypeAccepted="video"
+                        fileTypeAccepted='video'
                       />
                     </FormControl>
                     <FormMessage />
@@ -153,7 +160,7 @@ export function LessonForm({ chapterId, courseId, data }: iAppProps) {
                 )}
               />
 
-              <Button type="submit" disabled={pending}>
+              <Button type='submit' disabled={pending}>
                 {pending ? "Saving..." : "Save Lesson"}
               </Button>
             </form>

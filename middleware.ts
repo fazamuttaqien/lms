@@ -1,6 +1,8 @@
-import arcjet, { createMiddleware, detectBot } from "@arcjet/next";
 import { NextRequest, NextResponse } from "next/server";
+
+import arcjet, { createMiddleware, detectBot } from "@arcjet/next";
 import { getSessionCookie } from "better-auth/cookies";
+
 import { env } from "./lib/env";
 
 const aj = arcjet({

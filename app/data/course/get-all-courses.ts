@@ -1,8 +1,9 @@
 import "server-only";
+
 import { prisma } from "@/lib/db";
 
 export async function getAllCourses() {
-  await new Promise((resolve) => setTimeout(resolve, 2000));
+  await new Promise(resolve => setTimeout(resolve, 2000));
 
   return await prisma.course.findMany({
     where: {

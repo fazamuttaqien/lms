@@ -1,5 +1,9 @@
 "use client";
 
+import { useMemo } from "react";
+
+import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
+
 import {
   Card,
   CardDescription,
@@ -12,8 +16,6 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { useMemo } from "react";
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 
 export const description = "An interactive area chart";
 
@@ -38,31 +40,31 @@ export function ChartAreaInteractive({ data }: ChartAreaInteractiveProps) {
   );
 
   return (
-    <Card className="@container/card">
+    <Card className='@container/card'>
       <CardHeader>
         <CardTitle>Total Enrollments</CardTitle>
         <CardDescription>
-          <span className="hidden @[540px]/card:block">
+          <span className='hidden @[540px]/card:block'>
             Total Enrollments for the last 30 days: {totalEnrollmentsNumber}
           </span>
-          <span className="@[540px]/card:hidden">
+          <span className='@[540px]/card:hidden'>
             Last 30 days: {totalEnrollmentsNumber}
           </span>
         </CardDescription>
       </CardHeader>
       <ChartContainer
         config={chartConfig}
-        className="aspect-ratio h-[250px] w-full"
+        className='aspect-ratio h-[250px] w-full'
       >
         <BarChart data={data} margin={{ left: 12, right: 12 }}>
           <CartesianGrid vertical={false} />
           <XAxis
-            dataKey="date"
+            dataKey='date'
             tickLine={false}
             axisLine={false}
             tickMargin={8}
             interval={"preserveStartEnd"}
-            tickFormatter={(value) => {
+            tickFormatter={value => {
               const date = new Date(value);
               return date.toLocaleDateString("en-US", {
                 month: "short",
@@ -73,8 +75,8 @@ export function ChartAreaInteractive({ data }: ChartAreaInteractiveProps) {
           <ChartTooltip
             content={
               <ChartTooltipContent
-                className="w-[150px]"
-                labelFormatter={(value) => {
+                className='w-[150px]'
+                labelFormatter={value => {
                   const date = new Date(value);
                   return date.toLocaleDateString("en-US", {
                     month: "short",
@@ -85,7 +87,7 @@ export function ChartAreaInteractive({ data }: ChartAreaInteractiveProps) {
             }
           />
 
-          <Bar dataKey={"enrollments"} fill="var(--color-enrollments)" />
+          <Bar dataKey={"enrollments"} fill='var(--color-enrollments)' />
         </BarChart>
       </ChartContainer>
     </Card>

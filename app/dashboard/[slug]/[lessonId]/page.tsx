@@ -1,6 +1,8 @@
-import { getLessonContent } from "@/app/data/course/get-lesson-content";
-import { CourseContent } from "./_components/CourseContent";
 import { Suspense } from "react";
+
+import { getLessonContent } from "@/app/data/course/get-lesson-content";
+
+import { CourseContent } from "./_components/CourseContent";
 import { LessonSkeleton } from "./_components/LessonSkeleton";
 
 type Params = Promise<{ lessonId: string }>;

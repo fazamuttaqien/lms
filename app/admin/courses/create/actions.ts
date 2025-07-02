@@ -1,12 +1,14 @@
 "use server";
 
-import { requiredAdmin } from "@/app/data/admin/require-admin";
+import { request } from "@arcjet/next";
+
 import arcjet, { fixedWindow } from "@/lib/arcjet";
 import { prisma } from "@/lib/db";
 import { stripe } from "@/lib/stripe";
 import { ApiResponse } from "@/lib/types";
-import { courseSchema, CourseSchemaType } from "@/lib/zod-schemas";
-import { request } from "@arcjet/next";
+import { CourseSchemaType, courseSchema } from "@/lib/zod-schemas";
+
+import { requiredAdmin } from "@/app/data/admin/require-admin";
 
 const aj = arcjet.withRule(
   fixedWindow({

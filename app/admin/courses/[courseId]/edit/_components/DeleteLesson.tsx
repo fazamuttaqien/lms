@@ -1,3 +1,8 @@
+import { useState, useTransition } from "react";
+
+import { Trash2 } from "lucide-react";
+import { toast } from "sonner";
+
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -9,11 +14,10 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+
 import { tryCatch } from "@/lib/try-catch";
-import { Trash2 } from "lucide-react";
-import { useState, useTransition } from "react";
+
 import { deleteLesson } from "../action";
-import { toast } from "sonner";
 
 export function DeleteLesson({
   chapterId,
@@ -50,8 +54,8 @@ export function DeleteLesson({
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>
-        <Button variant="ghost" size="icon">
-          <Trash2 className="size-4" />
+        <Button variant='ghost' size='icon'>
+          <Trash2 className='size-4' />
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>

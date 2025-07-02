@@ -1,18 +1,22 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+
 import { FileRejection, useDropzone } from "react-dropzone";
-import { Card, CardContent } from "../ui/card";
+import { toast } from "sonner";
+import { v4 as uuidv4 } from "uuid";
+
 import { cn } from "@/lib/utils";
+
+import { useConstructUrl } from "@/hooks/use-construct-url";
+
+import { Card, CardContent } from "../ui/card";
 import {
   RenderEmptyState,
   RenderErrorState,
   RenderUploadedState,
   RenderUploadingState,
 } from "./RenderState";
-import { toast } from "sonner";
-import { v4 as uuidv4 } from "uuid";
-import { useConstructUrl } from "@/hooks/use-construct-url";
 
 interface UploaderState {
   id: string | null;
@@ -48,7 +52,7 @@ export function Uploader({ onChange, value, fileTypeAccepted }: iAppProps) {
 
   const uploadFile = useCallback(
     async (file: File) => {
-      setFileState((prev) => ({
+      setFileState(prev => ({
         ...prev,
         uploading: true,
         progress: 0,
@@ -68,7 +72,7 @@ export function Uploader({ onChange, value, fileTypeAccepted }: iAppProps) {
 
         if (!presignedResponse.ok) {
           toast.error("Failed to get presigned URL");
-          setFileState((prev) => ({
+          setFileState(prev => ({
             ...prev,
             uploading: false,
             progress: 0,
@@ -82,10 +86,10 @@ export function Uploader({ onChange, value, fileTypeAccepted }: iAppProps) {
 
         await new Promise<void>((resolve, reject) => {
           const xhr = new XMLHttpRequest();
-          xhr.upload.onprogress = (event) => {
+          xhr.upload.onprogress = event => {
             if (event.lengthComputable) {
               const percentageCompleted = (event.loaded / event.total) * 100;
-              setFileState((prev) => ({
+              setFileState(prev => ({
                 ...prev,
                 progress: Math.round(percentageCompleted),
               }));
@@ -94,7 +98,7 @@ export function Uploader({ onChange, value, fileTypeAccepted }: iAppProps) {
 
           xhr.onload = () => {
             if (xhr.status === 200 || xhr.status === 204) {
-              setFileState((prev) => ({
+              setFileState(prev => ({
                 ...prev,
                 progress: 100,
                 uploading: false,
@@ -121,7 +125,7 @@ export function Uploader({ onChange, value, fileTypeAccepted }: iAppProps) {
         });
       } catch (error) {
         toast.error("Something went error");
-        setFileState((prev) => ({
+        setFileState(prev => ({
           ...prev,
           progress: 0,
           uploading: false,
@@ -162,7 +166,7 @@ export function Uploader({ onChange, value, fileTypeAccepted }: iAppProps) {
       return;
     }
     try {
-      setFileState((prev) => ({
+      setFileState(prev => ({
         ...prev,
         isDeleting: true,
       }));
@@ -177,7 +181,7 @@ export function Uploader({ onChange, value, fileTypeAccepted }: iAppProps) {
 
       if (!response.ok) {
         toast.error("Failed to remove file from storage");
-        setFileState((prev) => ({
+        setFileState(prev => ({
           ...prev,
           isDeleting: true,
           error: true,
@@ -192,7 +196,7 @@ export function Uploader({ onChange, value, fileTypeAccepted }: iAppProps) {
 
       onChange?.("");
 
-      setFileState((prev) => ({
+      setFileState(prev => ({
         file: null,
         uploading: false,
         progress: 0,
@@ -207,7 +211,7 @@ export function Uploader({ onChange, value, fileTypeAccepted }: iAppProps) {
     } catch (error) {
       toast.error("Error removing file. Please try again...");
 
-      setFileState((prev) => ({
+      setFileState(prev => ({
         ...prev,
         isDeleting: false,
         error: true,
@@ -218,11 +222,11 @@ export function Uploader({ onChange, value, fileTypeAccepted }: iAppProps) {
   function rejectedFiles(fileRejection: FileRejection[]) {
     if (fileRejection.length) {
       const tooManyFiles = fileRejection.find(
-        (rejection) => rejection.errors[0].code === "too-many-files"
+        rejection => rejection.errors[0].code === "too-many-files"
       );
 
       const fileSizeToBig = fileRejection.find(
-        (rejection) => rejection.errors[0].code === "file-too-large"
+        rejection => rejection.errors[0].code === "file-too-large"
       );
 
       if (fileSizeToBig) {
@@ -285,7 +289,7 @@ export function Uploader({ onChange, value, fileTypeAccepted }: iAppProps) {
     <Card
       {...getRootProps()}
       className={cn(
-        "relative border-2 border-dashed transition-colors duration-200 ease-in-out w-full h-64",
+        "relative h-64 w-full border-2 border-dashed transition-colors duration-200 ease-in-out",
         isDragActive
           ? "border-primary bg-primary/10 border-solid"
           : "border-border hover:border-primary"
@@ -293,7 +297,7 @@ export function Uploader({ onChange, value, fileTypeAccepted }: iAppProps) {
     >
       <CardContent
         className={cn(
-          "flex items-center justify-center h-full w-full p-4",
+          "flex h-full w-full items-center justify-center p-4",
           isDragActive
             ? "border-primary bg-primary/10 border-solid"
             : "border-border hover:border-primary"

@@ -1,5 +1,3 @@
-import "server-only";
-
 import arcjet, {
   detectBot,
   fixedWindow,
@@ -8,6 +6,8 @@ import arcjet, {
   shield,
   slidingWindow,
 } from "@arcjet/next";
+import "server-only";
+
 import { env } from "./env";
 
 export {
