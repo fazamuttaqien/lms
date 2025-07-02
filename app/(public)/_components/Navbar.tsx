@@ -15,8 +15,7 @@ const navigationItems = [
 ];
 
 export function Navbar() {
-  const { data: session, isPending } =
-    authClient.useSession();
+  const { data: session, isPending } = authClient.useSession();
 
   return (
     <header
@@ -24,10 +23,7 @@ export function Navbar() {
             backdrop-blur-[backdrop-filter]:bg-background/60"
     >
       <div className="container flex min-h-16 items-center mx-auto px-4 md:px-6 lg:px-8">
-        <Link
-          href="/"
-          className="flex items-center space-x-2 mr-4"
-        >
+        <Link href="/" className="flex items-center space-x-2 mr-4">
           {/* <Image src={Logo} alt="Log" width={32} height={32} /> */}
           <span className="font-bold">Acme Inc.</span>
         </Link>
@@ -50,8 +46,7 @@ export function Navbar() {
             {isPending ? null : session ? (
               <UserDropdown
                 name={
-                  session?.user.name &&
-                  session.user.name.length > 0
+                  session?.user.name && session.user.name.length > 0
                     ? session.user.name
                     : session?.user.email.split("@")[0]
                 }
@@ -68,10 +63,7 @@ export function Navbar() {
                 >
                   Login
                 </Link>
-                <Link
-                  href="/login"
-                  className={buttonVariants()}
-                >
+                <Link href="/login" className={buttonVariants()}>
                   Get Started
                 </Link>
               </>

@@ -9,10 +9,7 @@ export const useConfetti = () => {
       origin: { y: 0.7 },
     };
 
-    function fire(
-      particleRatio: number,
-      opts: Record<string, unknown>
-    ) {
+    function fire(particleRatio: number, opts: Record<string, unknown>) {
       confetti({
         ...defaults,
         ...opts,

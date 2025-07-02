@@ -42,9 +42,7 @@ const signupOptions = {
   rateLimit: rateLimitOptions,
 } satisfies ProtectSignupOptions<[]>;
 
-async function protect(
-  req: NextRequest
-): Promise<ArcjetDecision> {
+async function protect(req: NextRequest): Promise<ArcjetDecision> {
   const session = await auth.api.getSession({
     headers: req.headers,
   });
@@ -61,9 +59,7 @@ async function protect(
 
   // If this is a signup then use the special protectSignup rule
   // See https://docs.arcjet.com/signup-protection/quick-start
-  if (
-    req.nextUrl.pathname.startsWith("/api/auth/sign-up")
-  ) {
+  if (req.nextUrl.pathname.startsWith("/api/auth/sign-up")) {
     // Better-Auth reads the body, so we need to clone the request preemptively
     const body = await req.clone().json();
 
@@ -71,12 +67,10 @@ async function protect(
     // the email validation checks as well. See
     // https://www.better-auth.com/docs/concepts/hooks#example-enforce-email-domain-restriction
     if (typeof body.email === "string") {
-      return arcjet
-        .withRule(protectSignup(signupOptions))
-        .protect(req, {
-          email: body.email,
-          fingerprint: userId,
-        });
+      return arcjet.withRule(protectSignup(signupOptions)).protect(req, {
+        email: body.email,
+        fingerprint: userId,
+      });
     } else {
       // Otherwise use rate limit and detect bot
       return arcjet
@@ -109,16 +103,10 @@ export const POST = async (req: NextRequest) => {
       let message: string;
 
       if (decision.reason.emailTypes.includes("INVALID")) {
-        message =
-          "Email address format is invalid. Is there a typo?";
-      } else if (
-        decision.reason.emailTypes.includes("DISPOSABLE")
-      ) {
-        message =
-          "We do not allow disposable email addresses.";
-      } else if (
-        decision.reason.emailTypes.includes("NO_MX_RECORDS")
-      ) {
+        message = "Email address format is invalid. Is there a typo?";
+      } else if (decision.reason.emailTypes.includes("DISPOSABLE")) {
+        message = "We do not allow disposable email addresses.";
+      } else if (decision.reason.emailTypes.includes("NO_MX_RECORDS")) {
         message =
           "Your email domain does not have an MX record. Is there a typo?";
       } else {

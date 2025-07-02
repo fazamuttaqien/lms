@@ -34,9 +34,7 @@ export function DeleteLesson({
       );
 
       if (error) {
-        toast.error(
-          "An unexpected error occured. Please try again"
-        );
+        toast.error("An unexpected error occured. Please try again");
         return;
       }
 
@@ -58,12 +56,10 @@ export function DeleteLesson({
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>
-            Are you absolutely sure ?
-          </AlertDialogTitle>
+          <AlertDialogTitle>Are you absolutely sure ?</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will
-            permanently delete this lesson.
+            This action cannot be undone. This will permanently delete this
+            lesson.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

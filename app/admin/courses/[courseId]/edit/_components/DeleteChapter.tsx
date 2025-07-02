@@ -32,9 +32,7 @@ export function DeleteChapter({
       );
 
       if (error) {
-        toast.error(
-          "An unexpected error occured. Please try again"
-        );
+        toast.error("An unexpected error occured. Please try again");
         return;
       }
 
@@ -56,12 +54,10 @@ export function DeleteChapter({
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>
-            Are you absolutely sure ?
-          </AlertDialogTitle>
+          <AlertDialogTitle>Are you absolutely sure ?</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will
-            permanently delete this chapter.
+            This action cannot be undone. This will permanently delete this
+            chapter.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

@@ -1,16 +1,11 @@
 import { requiredAdmin } from "@/app/data/admin/require-admin";
-import arcjet, {
-  fixedWindow,
-} from "@/lib/arcjet";
+import arcjet, { fixedWindow } from "@/lib/arcjet";
 import { env } from "@/lib/env";
 import { S3 } from "@/lib/s3-client";
 import { DeleteObjectCommand } from "@aws-sdk/client-s3";
 import { NextResponse } from "next/server";
 
-const aj = arcjet
-  .withRule(
-    fixedWindow({ mode: "LIVE", window: "1m", max: 5 })
-  );
+const aj = arcjet.withRule(fixedWindow({ mode: "LIVE", window: "1m", max: 5 }));
 
 export async function DELETE(request: Request) {
   const session = await requiredAdmin();
@@ -21,10 +16,7 @@ export async function DELETE(request: Request) {
     });
 
     if (decision.isDenied()) {
-      return NextResponse.json(
-        { error: "Not good" },
-        { status: 429 }
-      );
+      return NextResponse.json({ error: "Not good" }, { status: 429 });
     }
 
     const body = await request.json();

@@ -1,3 +1,4 @@
+import "server-only";
 import { prisma } from "@/lib/db";
 
 export async function getAllCourses() {
@@ -24,6 +25,4 @@ export async function getAllCourses() {
   });
 }
 
-export type PublicCourseType = Awaited<
-  ReturnType<typeof getAllCourses>
->[0];
+export type PublicCourseType = Awaited<ReturnType<typeof getAllCourses>>[0];

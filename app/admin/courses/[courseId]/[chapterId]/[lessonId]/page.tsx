@@ -7,20 +7,10 @@ type Params = Promise<{
   lessonId: string;
 }>;
 
-export default async function LessonIdPage({
-  params,
-}: {
-  params: Params;
-}) {
+export default async function LessonIdPage({ params }: { params: Params }) {
   const { chapterId, courseId, lessonId } = await params;
 
   const lesson = await adminGetLesson(lessonId);
 
-  return (
-    <LessonForm
-      data={lesson}
-      chapterId={chapterId}
-      courseId={courseId}
-    />
-  );
+  return <LessonForm data={lesson} chapterId={chapterId} courseId={courseId} />;
 }

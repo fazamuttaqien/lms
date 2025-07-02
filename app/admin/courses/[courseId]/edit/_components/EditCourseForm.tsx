@@ -33,11 +33,7 @@ import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import {
-  Loader2,
-  PlusIcon,
-  SparkleIcon,
-} from "lucide-react";
+import { Loader2, PlusIcon, SparkleIcon } from "lucide-react";
 import slugify from "slugify";
 import { editCourse } from "../action";
 import { AdminCourseSingularType } from "@/app/data/admin/admin-get-course";
@@ -59,8 +55,7 @@ export function EditCourseForm({ data }: IAppProps) {
       price: data.price,
       duration: data.duration,
       level: data.level,
-      category:
-        data.category as CourseSchemaType["category"],
+      category: data.category as CourseSchemaType["category"],
       smallDescription: data.smallDescription,
       slug: data.slug,
       status: data.status,
@@ -73,9 +68,7 @@ export function EditCourseForm({ data }: IAppProps) {
         editCourse(values, data.id)
       );
       if (error) {
-        toast.error(
-          "An unexpected error occured. Please try again."
-        );
+        toast.error("An unexpected error occured. Please try again.");
         return;
       }
       if (result.status === "success") {
@@ -91,10 +84,7 @@ export function EditCourseForm({ data }: IAppProps) {
   return (
     <>
       <Form {...form}>
-        <form
-          className="space-y-6"
-          onSubmit={form.handleSubmit(onSubmit)}
-        >
+        <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
           <FormField
             control={form.control}
             name="title"
@@ -135,8 +125,7 @@ export function EditCourseForm({ data }: IAppProps) {
                 });
               }}
             >
-              Generate Slug{" "}
-              <SparkleIcon className="ml-1" size={16} />
+              Generate Slug <SparkleIcon className="ml-1" size={16} />
             </Button>
           </div>
           <FormField
@@ -146,10 +135,7 @@ export function EditCourseForm({ data }: IAppProps) {
               <FormItem className="w-full">
                 <FormLabel>Small Description</FormLabel>
                 <FormControl>
-                  <Textarea
-                    className="min-h-[120px]"
-                    {...field}
-                  />
+                  <Textarea className="min-h-[120px]" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -204,10 +190,7 @@ export function EditCourseForm({ data }: IAppProps) {
                     </FormControl>
                     <SelectContent>
                       {courseCategories.map((category) => (
-                        <SelectItem
-                          key={category}
-                          value={category}
-                        >
+                        <SelectItem key={category} value={category}>
                           {category}
                         </SelectItem>
                       ))}
@@ -235,10 +218,7 @@ export function EditCourseForm({ data }: IAppProps) {
                     </FormControl>
                     <SelectContent>
                       {courseLevels.map((level) => (
-                        <SelectItem
-                          key={level}
-                          value={level}
-                        >
+                        <SelectItem key={level} value={level}>
                           {level}
                         </SelectItem>
                       ))}
@@ -256,11 +236,7 @@ export function EditCourseForm({ data }: IAppProps) {
                 <FormItem className="w-full">
                   <FormLabel>Duration (hours)</FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="Duration"
-                      type="number"
-                      {...field}
-                    />
+                    <Input placeholder="Duration" type="number" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -273,11 +249,7 @@ export function EditCourseForm({ data }: IAppProps) {
                 <FormItem className="w-full">
                   <FormLabel>Price ($)</FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="Price"
-                      type="number"
-                      {...field}
-                    />
+                    <Input placeholder="Price" type="number" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -301,10 +273,7 @@ export function EditCourseForm({ data }: IAppProps) {
                   </FormControl>
                   <SelectContent>
                     {courseStatus.map((status) => (
-                      <SelectItem
-                        key={status}
-                        value={status}
-                      >
+                      <SelectItem key={status} value={status}>
                         {status}
                       </SelectItem>
                     ))}
@@ -323,8 +292,7 @@ export function EditCourseForm({ data }: IAppProps) {
               </>
             ) : (
               <>
-                Update Course{" "}
-                <PlusIcon className="ml-1" size={16} />
+                Update Course <PlusIcon className="ml-1" size={16} />
               </>
             )}
           </Button>

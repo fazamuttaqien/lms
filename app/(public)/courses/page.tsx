@@ -13,8 +13,8 @@ export default function PublicCoursesRoute() {
           Explore Courses
         </h1>
         <p className="text-muted-foreground">
-          Discover our wide range of courses designed to
-          help you achieve your learning goals
+          Discover our wide range of courses designed to help you achieve your
+          learning goals
         </p>
       </div>
 

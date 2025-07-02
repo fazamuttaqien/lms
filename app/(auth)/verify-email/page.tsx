@@ -13,10 +13,7 @@ import {
 } from "@/components/ui/input-otp";
 import { authClient } from "@/lib/auth-client";
 import { Loader2 } from "lucide-react";
-import {
-  useSearchParams,
-  useRouter,
-} from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { toast } from "sonner";
 
@@ -41,9 +38,7 @@ export default function VerifyEmail() {
             router.push("/");
           },
           onError: (err) => {
-            toast.error(
-              `Failed to verify email: ${err.error.message}`
-            );
+            toast.error(`Failed to verify email: ${err.error.message}`);
           },
         },
       });
@@ -53,13 +48,10 @@ export default function VerifyEmail() {
   return (
     <Card className="w-full mx-auto">
       <CardHeader className="text-center">
-        <CardTitle className="text-xl">
-          Please check your email
-        </CardTitle>
+        <CardTitle className="text-xl">Please check your email</CardTitle>
         <CardDescription>
-          We have sent a verification email code to your
-          email address. Please open the email and paste the
-          code below.
+          We have sent a verification email code to your email address. Please
+          open the email and paste the code below.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -82,8 +74,7 @@ export default function VerifyEmail() {
             </InputOTPGroup>
           </InputOTP>
           <p className="text-sm text-muted-foreground">
-            Enter the 6-digit code from the email to verify
-            your account.
+            Enter the 6-digit code from the email to verify your account.
           </p>
         </div>
         <Button

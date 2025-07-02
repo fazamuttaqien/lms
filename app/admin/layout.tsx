@@ -1,16 +1,9 @@
 import { ReactNode } from "react";
 import { AppSidebar } from "@/components/sidebar/app-sidebar";
 import { SiteHeader } from "@/components/sidebar/site-header";
-import {
-  SidebarInset,
-  SidebarProvider,
-} from "@/components/ui/sidebar";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 
-export default function AdminLayout({
-  children,
-}: {
-  children: ReactNode;
-}) {
+export default function AdminLayout({ children }: { children: ReactNode }) {
   return (
     <SidebarProvider
       style={

@@ -3,10 +3,7 @@
 import { AdminLessonType } from "@/app/data/admin/admin-get-lesson";
 import { Uploader } from "@/components/file-uploader/Uploader";
 import { RichTextEditor } from "@/components/rich-text-editor/Editor";
-import {
-  Button,
-  buttonVariants,
-} from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -24,10 +21,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { tryCatch } from "@/lib/try-catch";
-import {
-  lessonSchema,
-  LessonSchemaType,
-} from "@/lib/zod-schemas";
+import { lessonSchema, LessonSchemaType } from "@/lib/zod-schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
@@ -42,11 +36,7 @@ interface IAppProps {
   courseId: string;
 }
 
-export function LessonForm({
-  chapterId,
-  courseId,
-  data,
-}: IAppProps) {
+export function LessonForm({ chapterId, courseId, data }: IAppProps) {
   const [pending, startTransition] = useTransition();
 
   const form = useForm<LessonSchemaType>({
@@ -67,9 +57,7 @@ export function LessonForm({
         updateLesson(values, data.id)
       );
       if (error) {
-        toast.error(
-          "An unexpected error occured. Please try again."
-        );
+        toast.error("An unexpected error occured. Please try again.");
         return;
       }
       if (result.status === "success") {
@@ -98,16 +86,12 @@ export function LessonForm({
         <CardHeader>
           <CardTitle>Lesson Configuration</CardTitle>
           <CardDescription>
-            Configure the video and description for this
-            lesson.
+            Configure the video and description for this lesson.
           </CardDescription>
         </CardHeader>
         <CardContent>
           <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(onSubmit)}
-              className="space-y-6"
-            >
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               <FormField
                 control={form.control}
                 name="name"
@@ -115,10 +99,7 @@ export function LessonForm({
                   <FormItem>
                     <FormLabel>Lesson name</FormLabel>
                     <FormControl>
-                      <Input
-                        placeholder="Chapter..."
-                        {...field}
-                      />
+                      <Input placeholder="Chapter..." {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

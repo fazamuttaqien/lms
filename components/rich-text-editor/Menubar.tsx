@@ -46,8 +46,7 @@ export function Menubar({ editor }: IAppProps) {
                   editor.chain().focus().toggleBold().run()
                 }
                 className={cn(
-                  editor.isActive("bold") &&
-                    "bg-muted text-muted-foreground"
+                  editor.isActive("bold") && "bg-muted text-muted-foreground"
                 )}
               >
                 <Bold />
@@ -61,15 +60,10 @@ export function Menubar({ editor }: IAppProps) {
                 size="sm"
                 pressed={editor.isActive("italic")}
                 onPressedChange={() =>
-                  editor
-                    .chain()
-                    .focus()
-                    .toggleItalic()
-                    .run()
+                  editor.chain().focus().toggleItalic().run()
                 }
                 className={cn(
-                  editor.isActive("italic") &&
-                    "bg-muted text-muted-foreground"
+                  editor.isActive("italic") && "bg-muted text-muted-foreground"
                 )}
               >
                 <Italic />
@@ -83,15 +77,10 @@ export function Menubar({ editor }: IAppProps) {
                 size="sm"
                 pressed={editor.isActive("strike")}
                 onPressedChange={() =>
-                  editor
-                    .chain()
-                    .focus()
-                    .toggleStrike()
-                    .run()
+                  editor.chain().focus().toggleStrike().run()
                 }
                 className={cn(
-                  editor.isActive("strike") &&
-                    "bg-muted text-muted-foreground"
+                  editor.isActive("strike") && "bg-muted text-muted-foreground"
                 )}
               >
                 <Strikethrough />
@@ -105,11 +94,7 @@ export function Menubar({ editor }: IAppProps) {
                 size="sm"
                 pressed={editor.isActive("heading")}
                 onPressedChange={() =>
-                  editor
-                    .chain()
-                    .focus()
-                    .toggleHeading({ level: 1 })
-                    .run()
+                  editor.chain().focus().toggleHeading({ level: 1 }).run()
                 }
                 className={cn(
                   editor.isActive("heading", {
@@ -128,11 +113,7 @@ export function Menubar({ editor }: IAppProps) {
                 size="sm"
                 pressed={editor.isActive("heading")}
                 onPressedChange={() =>
-                  editor
-                    .chain()
-                    .focus()
-                    .toggleHeading({ level: 2 })
-                    .run()
+                  editor.chain().focus().toggleHeading({ level: 2 }).run()
                 }
                 className={cn(
                   editor.isActive("heading", {
@@ -151,11 +132,7 @@ export function Menubar({ editor }: IAppProps) {
                 size="sm"
                 pressed={editor.isActive("heading")}
                 onPressedChange={() =>
-                  editor
-                    .chain()
-                    .focus()
-                    .toggleHeading({ level: 3 })
-                    .run()
+                  editor.chain().focus().toggleHeading({ level: 3 }).run()
                 }
                 className={cn(
                   editor.isActive("heading", {
@@ -174,11 +151,7 @@ export function Menubar({ editor }: IAppProps) {
                 size="sm"
                 pressed={editor.isActive("bulletList")}
                 onPressedChange={() =>
-                  editor
-                    .chain()
-                    .focus()
-                    .toggleBulletList()
-                    .run()
+                  editor.chain().focus().toggleBulletList().run()
                 }
                 className={cn(
                   editor.isActive("bulletList") &&
@@ -196,11 +169,7 @@ export function Menubar({ editor }: IAppProps) {
                 size="sm"
                 pressed={editor.isActive("orderedList")}
                 onPressedChange={() =>
-                  editor
-                    .chain()
-                    .focus()
-                    .toggleOrderedList()
-                    .run()
+                  editor.chain().focus().toggleOrderedList().run()
                 }
                 className={cn(
                   editor.isActive("orderedList") &&
@@ -224,11 +193,7 @@ export function Menubar({ editor }: IAppProps) {
                   textAlign: "left",
                 })}
                 onPressedChange={() =>
-                  editor
-                    .chain()
-                    .focus()
-                    .setTextAlign("left")
-                    .run()
+                  editor.chain().focus().setTextAlign("left").run()
                 }
                 className={cn(
                   editor.isActive({ textAlign: "left" }) &&
@@ -248,11 +213,7 @@ export function Menubar({ editor }: IAppProps) {
                   textAlign: "center",
                 })}
                 onPressedChange={() =>
-                  editor
-                    .chain()
-                    .focus()
-                    .setTextAlign("center")
-                    .run()
+                  editor.chain().focus().setTextAlign("center").run()
                 }
                 className={cn(
                   editor.isActive({
@@ -273,11 +234,7 @@ export function Menubar({ editor }: IAppProps) {
                   textAlign: "right",
                 })}
                 onPressedChange={() =>
-                  editor
-                    .chain()
-                    .focus()
-                    .setTextAlign("right")
-                    .run()
+                  editor.chain().focus().setTextAlign("right").run()
                 }
                 className={cn(
                   editor.isActive({ textAlign: "right" }) &&
@@ -299,9 +256,7 @@ export function Menubar({ editor }: IAppProps) {
                 size="sm"
                 variant="ghost"
                 type="button"
-                onClick={() =>
-                  editor.chain().focus().undo().run()
-                }
+                onClick={() => editor.chain().focus().undo().run()}
                 disabled={!editor.can().undo()}
               >
                 <Undo />
@@ -316,9 +271,7 @@ export function Menubar({ editor }: IAppProps) {
                 size="sm"
                 variant="ghost"
                 type="button"
-                onClick={() =>
-                  editor.chain().focus().redo().run()
-                }
+                onClick={() => editor.chain().focus().redo().run()}
                 disabled={!editor.can().redo()}
               >
                 <Redo />

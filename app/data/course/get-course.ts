@@ -1,5 +1,6 @@
+import "server-only";
+
 import { prisma } from "@/lib/db";
-import { tree } from "next/dist/build/templates/app-page";
 import { notFound } from "next/navigation";
 
 export async function getIndividualCourse(slug: string) {

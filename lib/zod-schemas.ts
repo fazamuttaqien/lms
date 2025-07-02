@@ -1,15 +1,7 @@
 import { z } from "zod";
 
-export const courseLevels = [
-  "Beginner",
-  "Intermediate",
-  "Advanced",
-] as const;
-export const courseStatus = [
-  "Draft",
-  "Published",
-  "Archived",
-] as const;
+export const courseLevels = ["Beginner", "Intermediate", "Advanced"] as const;
+export const courseStatus = ["Draft", "Published", "Archived"] as const;
 export const courseCategories = [
   "Development",
   "Business",
@@ -34,8 +26,7 @@ export const courseSchema = z.object({
       message: "Title must not exceed 100 characters",
     }),
   description: z.string().min(5, {
-    message:
-      "Description must be at least 5 characters long",
+    message: "Description must be at least 5 characters long",
   }),
   fileKey: z.string().min(1, {
     message: "File is required",
@@ -60,12 +51,10 @@ export const courseSchema = z.object({
   smallDescription: z
     .string()
     .min(3, {
-      message:
-        "Small description must be at least 3 characters long",
+      message: "Small description must be at least 3 characters long",
     })
     .max(200, {
-      message:
-        "Small description must not exceed 200 characters",
+      message: "Small description must not exceed 200 characters",
     }),
   slug: z.string().min(3, {
     message: "Slog must be at least 3 characters long",
@@ -76,33 +65,22 @@ export const courseSchema = z.object({
 });
 
 export const chapterSchema = z.object({
-  name: z
-    .string()
-    .min(3, {
-      message: "Name must be at least 3 characters long",
-    }),
-  courseId: z
-    .string()
-    .uuid({ message: "Invalid course id" }),
+  name: z.string().min(3, {
+    message: "Name must be at least 3 characters long",
+  }),
+  courseId: z.string().uuid({ message: "Invalid course id" }),
 });
 
 export const lessonSchema = z.object({
-  name: z
-    .string()
-    .min(3, {
-      message: "Name must be at least 3 characters long",
-    }),
-  courseId: z
-    .string()
-    .uuid({ message: "Invalid course id" }),
-  chapterId: z
-    .string()
-    .uuid({ message: "Invalid chapter id" }),
+  name: z.string().min(3, {
+    message: "Name must be at least 3 characters long",
+  }),
+  courseId: z.string().uuid({ message: "Invalid course id" }),
+  chapterId: z.string().uuid({ message: "Invalid chapter id" }),
   description: z
     .string()
     .min(3, {
-      message:
-        "Description must be at least 3 characters long",
+      message: "Description must be at least 3 characters long",
     })
     .optional(),
   videoKey: z.string().optional(),
@@ -110,7 +88,5 @@ export const lessonSchema = z.object({
 });
 
 export type CourseSchemaType = z.infer<typeof courseSchema>;
-export type ChapterSchemaType = z.infer<
-  typeof chapterSchema
->;
+export type ChapterSchemaType = z.infer<typeof chapterSchema>;
 export type LessonSchemaType = z.infer<typeof lessonSchema>;

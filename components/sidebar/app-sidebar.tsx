@@ -131,9 +131,7 @@ const data = {
   ],
 };
 
-export function AppSidebar({
-  ...props
-}: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
@@ -145,9 +143,7 @@ export function AppSidebar({
             >
               <Link href="/">
                 {/* <Image src={Logo} alt="Logo" className="size-5" /> */}
-                <span className="text-base font-semibold">
-                  Acme Inc.
-                </span>
+                <span className="text-base font-semibold">Acme Inc.</span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -155,10 +151,7 @@ export function AppSidebar({
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavSecondary
-          items={data.navSecondary}
-          className="mt-auto"
-        />
+        <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
         <NavUser />

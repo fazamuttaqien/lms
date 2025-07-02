@@ -1,10 +1,7 @@
 import { requiredAdmin } from "@/app/data/admin/require-admin";
 import { prisma } from "@/lib/db";
 import { ApiResponse } from "@/lib/types";
-import {
-  lessonSchema,
-  LessonSchemaType,
-} from "@/lib/zod-schemas";
+import { lessonSchema, LessonSchemaType } from "@/lib/zod-schemas";
 
 export async function updateLesson(
   values: LessonSchemaType,

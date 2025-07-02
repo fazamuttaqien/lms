@@ -2,12 +2,7 @@
 
 import { AdminCourseSingularType } from "@/app/data/admin/admin-get-course";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Collapsible,
   CollapsibleContent,
@@ -54,9 +49,7 @@ interface IAppProps {
 
 interface SortableItemProps {
   id: string;
-  children: (
-    listeners: DraggableSyntheticListeners
-  ) => ReactNode;
+  children: (listeners: DraggableSyntheticListeners) => ReactNode;
   className?: string;
   data?: {
     type: "chapter" | "lesson";
@@ -64,9 +57,7 @@ interface SortableItemProps {
   };
 }
 
-export default function CourseStructure({
-  data,
-}: IAppProps) {
+export default function CourseStructure({ data }: IAppProps) {
   const initialItems =
     data.chapter.map((chapter) => ({
       id: chapter.id,
@@ -90,8 +81,7 @@ export default function CourseStructure({
           title: chapter.title,
           order: chapter.position,
           isOpen:
-            prevItems.find((item) => item.id === chapter.id)
-              ?.isOpen ?? true,
+            prevItems.find((item) => item.id === chapter.id)?.isOpen ?? true,
           lessons: chapter.lessons.map((lesson) => ({
             id: lesson.id,
             title: lesson.title,
@@ -103,12 +93,7 @@ export default function CourseStructure({
     });
   }, [data]);
 
-  function SortableItem({
-    children,
-    id,
-    className,
-    data,
-  }: SortableItemProps) {
+  function SortableItem({ children, id, className, data }: SortableItemProps) {
     const {
       attributes,
       listeners,
@@ -128,11 +113,7 @@ export default function CourseStructure({
         ref={setNodeRef}
         style={style}
         {...attributes}
-        className={cn(
-          "touch-none",
-          className,
-          isDragging ? "z-10" : ""
-        )}
+        className={cn("touch-none", className, isDragging ? "z-10" : "")}
       >
         {children(listeners)}
       </div>
@@ -148,12 +129,8 @@ export default function CourseStructure({
 
     const activeId = active.id;
     const overId = over.id;
-    const activeType = active.data.current?.type as
-      | "chapter"
-      | "lesson";
-    const overType = over.data.current?.type as
-      | "chapter"
-      | "lesson";
+    const activeType = active.data.current?.type as "chapter" | "lesson";
+    const overType = over.data.current?.type as "chapter" | "lesson";
     const courseId = data.id;
 
     if (activeType === "chapter") {
@@ -162,54 +139,40 @@ export default function CourseStructure({
       if (overType === "chapter") {
         targetChapterId = overId;
       } else if (overType === "lesson") {
-        targetChapterId =
-          over.data.current?.chapterId ?? null;
+        targetChapterId = over.data.current?.chapterId ?? null;
       }
 
       if (!targetChapterId) {
-        toast.error(
-          "Could not determine the chapter for recording"
-        );
+        toast.error("Could not determine the chapter for recording");
         return;
       }
 
-      const oldIndex = items.findIndex(
-        (item) => item.id === activeId
-      );
-      const newIndex = items.findIndex(
-        (item) => item.id === targetChapterId
-      );
+      const oldIndex = items.findIndex((item) => item.id === activeId);
+      const newIndex = items.findIndex((item) => item.id === targetChapterId);
 
       if (oldIndex === -1 || newIndex === -1) {
-        toast.error(
-          "Could not find chapter old/new index for reordering"
-        );
+        toast.error("Could not find chapter old/new index for reordering");
         return;
       }
 
-      const reorderedLocalChapters = arrayMove(
-        items,
-        oldIndex,
-        newIndex
-      );
+      const reorderedLocalChapters = arrayMove(items, oldIndex, newIndex);
 
-      const updatedChapterForState =
-        reorderedLocalChapters.map((chapter, index) => ({
+      const updatedChapterForState = reorderedLocalChapters.map(
+        (chapter, index) => ({
           ...chapter,
           order: index + 1,
-        }));
+        })
+      );
 
       const previousItems = [...items];
 
       setItems(updatedChapterForState);
 
       if (courseId) {
-        const chaptersToUpdate = updatedChapterForState.map(
-          (chapter) => ({
-            id: chapter.id,
-            position: chapter.order,
-          })
-        );
+        const chaptersToUpdate = updatedChapterForState.map((chapter) => ({
+          id: chapter.id,
+          position: chapter.order,
+        }));
 
         const reorderPromise = () =>
           reorderChapters(courseId, chaptersToUpdate);
@@ -217,8 +180,7 @@ export default function CourseStructure({
         toast.promise(reorderPromise(), {
           loading: "Reordering chapters...",
           success: (result) => {
-            if (result.status === "success")
-              return result.message;
+            if (result.status === "success") return result.message;
 
             throw new Error(result.message);
           },
@@ -252,15 +214,13 @@ export default function CourseStructure({
 
       const chapterToUpdate = items[chapterIndex];
 
-      const oldLessonIndex =
-        chapterToUpdate.lessons.findIndex(
-          (lesson) => lesson.id === activeId
-        );
+      const oldLessonIndex = chapterToUpdate.lessons.findIndex(
+        (lesson) => lesson.id === activeId
+      );
 
-      const newLessonIndex =
-        chapterToUpdate.lessons.findIndex(
-          (lesson) => lesson.id === overId
-        );
+      const newLessonIndex = chapterToUpdate.lessons.findIndex(
+        (lesson) => lesson.id === overId
+      );
 
       if (oldLessonIndex === -1 || newLessonIndex === -1) {
         toast.error("Could not find lesson for reordering");
@@ -273,12 +233,10 @@ export default function CourseStructure({
         newLessonIndex
       );
 
-      const updatedLessonForState = reorderedLessons.map(
-        (lesson, index) => ({
-          ...lesson,
-          order: index + 1,
-        })
-      );
+      const updatedLessonForState = reorderedLessons.map((lesson, index) => ({
+        ...lesson,
+        order: index + 1,
+      }));
 
       const newItems = [...items];
 
@@ -292,19 +250,13 @@ export default function CourseStructure({
       setItems(newItems);
 
       if (courseId) {
-        const lessonsToUpdate = updatedLessonForState.map(
-          (lesson) => ({
-            id: lesson.id,
-            position: lesson.order,
-          })
-        );
+        const lessonsToUpdate = updatedLessonForState.map((lesson) => ({
+          id: lesson.id,
+          position: lesson.order,
+        }));
 
         const reorderLessonsPromise = () =>
-          reorderLessons(
-            chapterId,
-            lessonsToUpdate,
-            courseId
-          );
+          reorderLessons(chapterId, lessonsToUpdate, courseId);
 
         toast.promise(reorderLessonsPromise(), {
           loading: "Reordering Lessons...",
@@ -352,10 +304,7 @@ export default function CourseStructure({
           <NewChapterModal courseId={data.id} />
         </CardHeader>
         <CardContent className="space-y-8">
-          <SortableContext
-            items={items}
-            strategy={verticalListSortingStrategy}
-          >
+          <SortableContext items={items} strategy={verticalListSortingStrategy}>
             {items.map((item) => (
               <SortableItem
                 key={item.id}
@@ -366,9 +315,7 @@ export default function CourseStructure({
                   <Card>
                     <Collapsible
                       open={item.isOpen}
-                      onOpenChange={() =>
-                        toggleChapter(item.id)
-                      }
+                      onOpenChange={() => toggleChapter(item.id)}
                     >
                       <div className="flex items-center justify-between p-3 border-b border-border">
                         <div className="flex items-center gap2">
@@ -381,10 +328,7 @@ export default function CourseStructure({
                             <GripVertical className="size-4" />
                           </Button>
                           <CollapsibleTrigger asChild>
-                            <Button
-                              size="icon"
-                              className="flex items-center"
-                            >
+                            <Button size="icon" className="flex items-center">
                               {item.isOpen ? (
                                 <ChevronDown className="size-4" />
                               ) : (
@@ -397,21 +341,14 @@ export default function CourseStructure({
                           </p>
                         </div>
 
-                        <DeleteChapter
-                          chapterId={item.id}
-                          courseId={data.id}
-                        />
+                        <DeleteChapter chapterId={item.id} courseId={data.id} />
                       </div>
 
                       <CollapsibleContent>
                         <div className="p-1">
                           <SortableContext
-                            items={item.lessons.map(
-                              (lesson) => lesson.id
-                            )}
-                            strategy={
-                              verticalListSortingStrategy
-                            }
+                            items={item.lessons.map((lesson) => lesson.id)}
+                            strategy={verticalListSortingStrategy}
                           >
                             {item.lessons.map((lesson) => (
                               <SortableItem

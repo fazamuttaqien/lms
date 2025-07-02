@@ -2,12 +2,7 @@
 
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -65,16 +60,13 @@ export default function Home() {
     <>
       <section className="relative py-20">
         <div className="flex flex-col items-center text-center space-y-8">
-          <Badge variant="outline">
-            The Future of Online Education
-          </Badge>
+          <Badge variant="outline">The Future of Online Education</Badge>
           <h1 className="text-4xl md:text-6xl font-bold tracking-light">
             Elevate your Learning Experience
           </h1>
           <p className="max-w-[700px] text-muted-foreground md:text-xl">
-            Discover our new way to learn with our model,
-            interactive learning management system. Access
-            high-quality courses anytime, anywhere.
+            Discover our new way to learn with our model, interactive learning
+            management system. Access high-quality courses anytime, anywhere.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 mt-8">
             <Link
@@ -99,20 +91,13 @@ export default function Home() {
       </section>
       <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {features.map((feature, index) => (
-          <Card
-            key={index}
-            className="hover:shadow-lg transition-shadow"
-          >
+          <Card key={index} className="hover:shadow-lg transition-shadow">
             <CardHeader>
-              <div className="text-4xl mb-4">
-                {feature.icon}
-              </div>
+              <div className="text-4xl mb-4">{feature.icon}</div>
               <CardTitle>{feature.title}</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-muted-foreground">
-                {feature.description}
-              </p>
+              <p className="text-muted-foreground">{feature.description}</p>
             </CardContent>
           </Card>
         ))}

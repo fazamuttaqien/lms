@@ -32,17 +32,11 @@ export default function AuthLayout({
         {children}
         <div className="text-balance text-sm text-center text-muted-foreground">
           By continuing, you agree to our{" "}
-          <Link
-            href="/terms"
-            className="underline underline-offset-4"
-          >
+          <Link href="/terms" className="underline underline-offset-4">
             Terms of Service
           </Link>{" "}
           and{" "}
-          <Link
-            href="/privacy"
-            className="underline underline-offset-4"
-          >
+          <Link href="/privacy" className="underline underline-offset-4">
             Privacy Policy
           </Link>
           .

@@ -8,10 +8,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-  lessonSchema,
-  LessonSchemaType,
-} from "@/lib/zod-schemas";
+import { lessonSchema, LessonSchemaType } from "@/lib/zod-schemas";
 import { Plus } from "lucide-react";
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
@@ -50,13 +47,9 @@ export function NewLessonModal({
 
   async function onSubmit(values: LessonSchemaType) {
     startTransition(async () => {
-      const { data: result, error } = await tryCatch(
-        createLesson(values)
-      );
+      const { data: result, error } = await tryCatch(createLesson(values));
       if (error) {
-        toast.error(
-          "An unexpected error occured. Please try again"
-        );
+        toast.error("An unexpected error occured. Please try again");
         return;
       }
 
@@ -81,10 +74,7 @@ export function NewLessonModal({
   return (
     <Dialog open={isOpen} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
-        <Button
-          variant="outline"
-          className="w-full justify-center gap-1"
-        >
+        <Button variant="outline" className="w-full justify-center gap-1">
           <Plus className="size=4" /> New Lesson
         </Button>
       </DialogTrigger>
@@ -96,10 +86,7 @@ export function NewLessonModal({
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form
-            className="space-y-8"
-            onSubmit={form.handleSubmit(onSubmit)}
-          >
+          <form className="space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
             <FormField
               control={form.control}
               name="name"
@@ -107,10 +94,7 @@ export function NewLessonModal({
                 <FormItem>
                   <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="Lesson name"
-                      {...field}
-                    />
+                    <Input placeholder="Lesson name" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

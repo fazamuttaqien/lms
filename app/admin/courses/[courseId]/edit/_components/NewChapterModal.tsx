@@ -8,10 +8,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-  chapterSchema,
-  ChapterSchemaType,
-} from "@/lib/zod-schemas";
+import { chapterSchema, ChapterSchemaType } from "@/lib/zod-schemas";
 import { Plus } from "lucide-react";
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
@@ -29,11 +26,7 @@ import { createChapter } from "../action";
 import { toast } from "sonner";
 import { tryCatch } from "@/lib/try-catch";
 
-export function NewChapterModal({
-  courseId,
-}: {
-  courseId: string;
-}) {
+export function NewChapterModal({ courseId }: { courseId: string }) {
   const [isOpen, setIsOpen] = useState(false);
   const [pending, startTransition] = useTransition();
 
@@ -47,13 +40,9 @@ export function NewChapterModal({
 
   async function onSubmit(values: ChapterSchemaType) {
     startTransition(async () => {
-      const { data: result, error } = await tryCatch(
-        createChapter(values)
-      );
+      const { data: result, error } = await tryCatch(createChapter(values));
       if (error) {
-        toast.error(
-          "An unexpected error occured. Please try again"
-        );
+        toast.error("An unexpected error occured. Please try again");
         return;
       }
 
@@ -74,11 +63,7 @@ export function NewChapterModal({
   return (
     <Dialog open={isOpen} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
-        <Button
-          variant="outline"
-          size="sm"
-          className="gap-2"
-        >
+        <Button variant="outline" size="sm" className="gap-2">
           <Plus className="size=4" /> New Chapter
         </Button>
       </DialogTrigger>
@@ -90,10 +75,7 @@ export function NewChapterModal({
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form
-            className="space-y-8"
-            onSubmit={form.handleSubmit(onSubmit)}
-          >
+          <form className="space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
             <FormField
               control={form.control}
               name="name"
@@ -101,10 +83,7 @@ export function NewChapterModal({
                 <FormItem>
                   <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="Chapter name"
-                      {...field}
-                    />
+                    <Input placeholder="Chapter name" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

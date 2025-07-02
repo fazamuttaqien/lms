@@ -9,11 +9,7 @@ import {
   IconUserCircle,
 } from "@tabler/icons-react";
 
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -36,8 +32,7 @@ import { useSignOut } from "@/hooks/use-signout";
 
 export function NavUser() {
   const { isMobile } = useSidebar();
-  const { data: session, isPending } =
-    authClient.useSession();
+  const { data: session, isPending } = authClient.useSession();
   const handleSignOut = useSignOut();
 
   if (isPending) {
@@ -62,20 +57,14 @@ export function NavUser() {
                   alt={session?.user.name}
                 />
                 <AvatarFallback className="rounded-lg">
-                  {session?.user.name &&
-                  session?.user.name.length > 0
-                    ? session.user.name
-                        .charAt(0)
-                        .toUpperCase()
-                    : session?.user.email
-                        .charAt(0)
-                        .toUpperCase()}
+                  {session?.user.name && session?.user.name.length > 0
+                    ? session.user.name.charAt(0).toUpperCase()
+                    : session?.user.email.charAt(0).toUpperCase()}
                 </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-medium">
-                  {session?.user.name &&
-                  session.user.name.length > 0
+                  {session?.user.name && session.user.name.length > 0
                     ? session.user.name
                     : session?.user.email.split("@")[0]}
                 </span>
@@ -103,20 +92,14 @@ export function NavUser() {
                     alt={session?.user.name}
                   />
                   <AvatarFallback className="rounded-lg">
-                    {session?.user.name &&
-                    session?.user.name.length > 0
-                      ? session.user.name
-                          .charAt(0)
-                          .toUpperCase()
-                      : session?.user.email
-                          .charAt(0)
-                          .toUpperCase()}
+                    {session?.user.name && session?.user.name.length > 0
+                      ? session.user.name.charAt(0).toUpperCase()
+                      : session?.user.email.charAt(0).toUpperCase()}
                   </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-medium">
-                    {session?.user.name &&
-                    session.user.name.length > 0
+                    {session?.user.name && session.user.name.length > 0
                       ? session.user.name
                       : session?.user.email.split("@")[0]}
                   </span>

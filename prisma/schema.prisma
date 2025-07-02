@@ -88,6 +88,9 @@ model Course {
   duration    Int
   level       CourseLevel @default(Beginner)
 
+  // It should be required, without `?`
+  stripePriceId String? @unique
+
   category         String
   smallDescription String
   slug             String @unique

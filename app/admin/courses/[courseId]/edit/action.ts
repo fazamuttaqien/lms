@@ -1,9 +1,7 @@
 "use server";
 
 import { requiredAdmin } from "@/app/data/admin/require-admin";
-import arcjet, {
-  fixedWindow,
-} from "@/lib/arcjet";
+import arcjet, { fixedWindow } from "@/lib/arcjet";
 import { prisma } from "@/lib/db";
 import { ApiResponse } from "@/lib/types";
 import {
@@ -17,10 +15,7 @@ import {
 import { request } from "@arcjet/next";
 import { revalidatePath } from "next/cache";
 
-const aj = arcjet
-  .withRule(
-    fixedWindow({ mode: "LIVE", window: "1m", max: 5 })
-  );
+const aj = arcjet.withRule(fixedWindow({ mode: "LIVE", window: "1m", max: 5 }));
 
 export async function editCourse(
   data: CourseSchemaType,
@@ -38,14 +33,12 @@ export async function editCourse(
       if (decision.reason.isRateLimit()) {
         return {
           status: "error",
-          message:
-            "You have been blocked due to rate limiting",
+          message: "You have been blocked due to rate limiting",
         };
       } else {
         return {
           status: "error",
-          message:
-            "You are bot! If this is a mistake, contact our support",
+          message: "You are bot! If this is a mistake, contact our support",
         };
       }
     }
@@ -199,9 +192,7 @@ export async function createChapter(
       });
     });
 
-    revalidatePath(
-      `/admin/courses/${result.data.courseId}/edit`
-    );
+    revalidatePath(`/admin/courses/${result.data.courseId}/edit`);
 
     return {
       status: "success",
@@ -254,9 +245,7 @@ export async function createLesson(
       });
     });
 
-    revalidatePath(
-      `/admin/courses/${result.data.courseId}/edit`
-    );
+    revalidatePath(`/admin/courses/${result.data.courseId}/edit`);
 
     return {
       status: "success",
@@ -281,23 +270,22 @@ export async function deleteLesson({
 }): Promise<ApiResponse> {
   await requiredAdmin();
   try {
-    const chapterWithLessons =
-      await prisma.chapter.findUnique({
-        where: {
-          id: chapterId,
-        },
-        select: {
-          lessons: {
-            orderBy: {
-              position: "asc",
-            },
-            select: {
-              id: true,
-              position: true,
-            },
+    const chapterWithLessons = await prisma.chapter.findUnique({
+      where: {
+        id: chapterId,
+      },
+      select: {
+        lessons: {
+          orderBy: {
+            position: "asc",
+          },
+          select: {
+            id: true,
+            position: true,
           },
         },
-      });
+      },
+    });
 
     if (!chapterWithLessons) {
       return {
@@ -308,9 +296,7 @@ export async function deleteLesson({
 
     const lessons = chapterWithLessons.lessons;
 
-    const lessonToDelete = lessons.find(
-      (lesson) => lesson.id === lessonId
-    );
+    const lessonToDelete = lessons.find((lesson) => lesson.id === lessonId);
 
     if (!lessonToDelete) {
       return {
@@ -319,18 +305,14 @@ export async function deleteLesson({
       };
     }
 
-    const remainingLessons = lessons.filter(
-      (lesson) => lesson.id !== lessonId
-    );
+    const remainingLessons = lessons.filter((lesson) => lesson.id !== lessonId);
 
-    const updates = remainingLessons.map(
-      (lesson, index) => {
-        return prisma.lesson.update({
-          where: { id: lesson.id },
-          data: { position: index + 1 },
-        });
-      }
-    );
+    const updates = remainingLessons.map((lesson, index) => {
+      return prisma.lesson.update({
+        where: { id: lesson.id },
+        data: { position: index + 1 },
+      });
+    });
 
     await prisma.$transaction([
       ...updates,
@@ -346,8 +328,7 @@ export async function deleteLesson({
 
     return {
       status: "success",
-      message:
-        "Lesson deleted and positions reordered successfully",
+      message: "Lesson deleted and positions reordered successfully",
     };
   } catch (error) {
     return {
@@ -366,23 +347,22 @@ export async function deleteChapter({
 }): Promise<ApiResponse> {
   await requiredAdmin();
   try {
-    const courseWithChapters =
-      await prisma.course.findUnique({
-        where: {
-          id: courseId,
-        },
-        select: {
-          chapter: {
-            orderBy: {
-              position: "asc",
-            },
-            select: {
-              id: true,
-              position: true,
-            },
+    const courseWithChapters = await prisma.course.findUnique({
+      where: {
+        id: courseId,
+      },
+      select: {
+        chapter: {
+          orderBy: {
+            position: "asc",
+          },
+          select: {
+            id: true,
+            position: true,
           },
         },
-      });
+      },
+    });
 
     if (!courseWithChapters) {
       return {
@@ -393,9 +373,7 @@ export async function deleteChapter({
 
     const chapters = courseWithChapters.chapter;
 
-    const chapterToDelete = chapters.find(
-      (chap) => chap.id === chapterId
-    );
+    const chapterToDelete = chapters.find((chap) => chap.id === chapterId);
 
     if (!chapterToDelete) {
       return {
@@ -404,9 +382,7 @@ export async function deleteChapter({
       };
     }
 
-    const remainingChapters = chapters.filter(
-      (chap) => chap.id !== chapterId
-    );
+    const remainingChapters = chapters.filter((chap) => chap.id !== chapterId);
 
     const updates = remainingChapters.map((chap, index) => {
       return prisma.chapter.update({
@@ -428,8 +404,7 @@ export async function deleteChapter({
 
     return {
       status: "success",
-      message:
-        "Chapter deleted and positions reordered successfully",
+      message: "Chapter deleted and positions reordered successfully",
     };
   } catch (error) {
     return {

@@ -1,9 +1,6 @@
 "use client";
 
-import {
-  Button,
-  buttonVariants,
-} from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -27,13 +24,9 @@ export default function DeleteCourseRoute() {
 
   const onSubmit = () => {
     startTransition(async () => {
-      const { data: result, error } = await tryCatch(
-        deleteCourse(courseId)
-      );
+      const { data: result, error } = await tryCatch(deleteCourse(courseId));
       if (error) {
-        toast.error(
-          "An unexpected error occured. Please try again."
-        );
+        toast.error("An unexpected error occured. Please try again.");
         return;
       }
       if (result.status === "success") {
@@ -49,12 +42,8 @@ export default function DeleteCourseRoute() {
     <div className="max-w-xl mx-auto w-full">
       <Card className="mt-32">
         <CardHeader>
-          <CardTitle>
-            Are you sure you want to delete this course ?
-          </CardTitle>
-          <CardDescription>
-            This action cannot be undone
-          </CardDescription>
+          <CardTitle>Are you sure you want to delete this course ?</CardTitle>
+          <CardDescription>This action cannot be undone</CardDescription>
         </CardHeader>
         <CardContent className="flex items-center justify-between">
           <Link
@@ -65,11 +54,7 @@ export default function DeleteCourseRoute() {
           >
             Cancel
           </Link>
-          <Button
-            variant="destructive"
-            onClick={onSubmit}
-            disabled={pending}
-          >
+          <Button variant="destructive" onClick={onSubmit} disabled={pending}>
             {pending ? (
               <>
                 <Loader2 className="size-4 animate-spin" />
